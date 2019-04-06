@@ -46,6 +46,19 @@ BEGIN
 
 END
 
+IF NOT EXISTS (SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
+			WHERE TABLE_NAME = 'Producer')
+BEGIN
+	CREATE TABLE Producer(
+		Id INT NOT NULL IDENTITY(1,1),
+		Name VARCHAR(MAX) NOT NULL,
+		ServicePhoneNo VARCHAR(50) NOT NULL
+
+		CONSTRAINT PK_ProducerId PRIMARY KEY (Id)
+	);
+		
+END
+
 
 -- create Washer table
 IF NOT EXISTS (SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
@@ -56,13 +69,14 @@ BEGIN
 		Id INT IDENTITY(1,1),
 		Name varchar(128),
 		RoomId INT NULL,
-		producer varchar(max),
+		ProducerId INT,
 		SinceWhen DATETIME,
 		IsActive bit default(1)
 
 		CONSTRAINT Name_uniqueness UNIQUE (Name),
 		CONSTRAINT PK_WasherId PRIMARY KEY (Id),
-		CONSTRAINT FK_Room_Washer FOREIGN KEY (RoomId) REFERENCES Room(Id)
+		CONSTRAINT FK_Room_Washer FOREIGN KEY (RoomId) REFERENCES Room(Id),
+		CONSTRAINT FK_ProducerId_Washer FOREIGN KEY (ProducerId) REFERENCES Producer(Id)
 
 	);
 

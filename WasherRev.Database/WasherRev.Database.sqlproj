@@ -75,4 +75,7 @@
   <ItemGroup>
     <None Include="SqlSchemaCompare.scmp" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Producer.sql" />
+  </ItemGroup>
 </Project>
