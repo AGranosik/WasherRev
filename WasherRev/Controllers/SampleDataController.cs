@@ -26,6 +26,14 @@ namespace WasherRev.Controllers
             });
         }
 
+        [HttpGet("[action]")]
+        public WeatherForecast Login()
+        {
+            return new WeatherForecast() {
+                Summary = "hehehe"
+            };
+        }
+
         public class WeatherForecast
         {
             public string DateFormatted { get; set; }
