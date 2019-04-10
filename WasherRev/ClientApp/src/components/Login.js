@@ -5,9 +5,21 @@ class Login extends React.Component{
 
     onSubmit = async (e) => {
        e.preventDefault();
-       const url = `api/SampleData/Login`;
-       const response = await fetch(url);
-       const forecasts = await response.json();
+       const url = `api/Users/Authenticate`;
+       const response = await fetch(
+           url,
+           {
+            method: 'post',
+            body: JSON.stringify({
+                Username: "admin",
+                Password: "admin"
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              }
+           });
+       const forecasts = await response;
 
        console.log(forecasts);
 
