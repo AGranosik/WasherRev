@@ -5,6 +5,7 @@
     [ProducerId] INT           NULL,
     [SinceWhen]  DATETIME      NULL,
     [IsActive]   BIT           DEFAULT ((1)) NULL,
+    [WorkedTo] DATETIME NULL, 
     CONSTRAINT [PK_WasherId] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_ProducerId_Washer] FOREIGN KEY ([ProducerId]) REFERENCES [dbo].[Producer] ([Id]),
     CONSTRAINT [FK_Room_Washer] FOREIGN KEY ([RoomId]) REFERENCES [dbo].[Room] ([Id]),

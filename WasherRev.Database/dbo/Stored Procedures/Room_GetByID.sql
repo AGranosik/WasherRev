@@ -1,4 +1,6 @@
-﻿CREATE PROCEDURE Room_GetAll
+﻿CREATE PROCEDURE Room_GetByID(
+	@Id int
+)
 AS
 BEGIN
 	SELECT 
@@ -9,5 +11,5 @@ BEGIN
 	[BuildingId],
 	[IsActive]
 	FROM [dbo].[Room]
-	WHERE IsActive = 1
+	WHERE Id = @Id
 END

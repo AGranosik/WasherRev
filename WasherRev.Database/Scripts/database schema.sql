@@ -71,6 +71,7 @@ BEGIN
 		RoomId INT NULL,
 		ProducerId INT,
 		SinceWhen DATETIME,
+		WorkedTo DATETIME NULL,
 		IsActive bit default(1)
 
 		CONSTRAINT Name_uniqueness UNIQUE (Name),

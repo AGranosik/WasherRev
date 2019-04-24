@@ -87,5 +87,17 @@
     <Build Include="dbo\Stored Procedures\Room_Remove.sql" />
     <Build Include="dbo\Stored Procedures\Room_Insert.sql" />
     <Build Include="dbo\Stored Procedures\Room_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Room_GetByID.sql" />
+    <Build Include="dbo\Stored Procedures\Producer_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Producer_Remove.sql" />
+    <Build Include="dbo\Stored Procedures\Producer_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Producer_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Producer_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Building_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Washer_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Washer_Remove.sql" />
+    <Build Include="dbo\Stored Procedures\Washer_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Washer_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Washer_GetAll.sql" />
   </ItemGroup>
 </Project>

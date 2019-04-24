@@ -13,6 +13,6 @@ BEGIN
 	Street = ISNULL(@Street, Street),
 	StreetNo = ISNULL(@StreetNo, StreetNo),
 	PostCode = ISNULL(@PostCode, PostCode),
-	IsActive = ISNULL(@IsActive, IsActive)
+	IsActive = IsActive
 	WHERE Id = @Id
 END
