@@ -6,10 +6,13 @@
     [Email]    VARCHAR (256) NOT NULL,
     [RoomId]   INT           NULL,
     [IsActive] BIT           DEFAULT ((1)) NULL,
+    [Salt]     VARCHAR (MAX) NOT NULL,
     CONSTRAINT [PK_UsersId] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Users_Room] FOREIGN KEY ([RoomId]) REFERENCES [dbo].[Room] ([Id]),
     UNIQUE NONCLUSTERED ([Username] ASC)
 );
+
+
 
 
 GO
