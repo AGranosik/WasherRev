@@ -60,6 +60,7 @@
     <Folder Include="Scripts" />
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\database schema.sql" />
@@ -78,5 +79,13 @@
   <ItemGroup>
     <Build Include="dbo\Tables\Producer.sql" />
     <None Include="Scripts\FakeDataScript.sql" />
+    <Build Include="dbo\Stored Procedures\Building_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Building_Remove.sql" />
+    <Build Include="dbo\Stored Procedures\Building_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Building_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Room_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Room_Remove.sql" />
+    <Build Include="dbo\Stored Procedures\Room_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Room_GetAll.sql" />
   </ItemGroup>
 </Project>
