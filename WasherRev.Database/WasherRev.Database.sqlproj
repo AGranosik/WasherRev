@@ -77,5 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Producer.sql" />
+    <None Include="Scripts\FakeDataScript.sql" />
   </ItemGroup>
 </Project>
