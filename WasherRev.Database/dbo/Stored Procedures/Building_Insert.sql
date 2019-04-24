@@ -9,4 +9,6 @@ AS
 BEGIN
 	INSERT INTO [DBO].[Building]
 	VALUES (@Name, @Street, @StreetNo, @PostCode, @IsActive)
+
+	SELECT SCOPE_IDENTITY()
 END

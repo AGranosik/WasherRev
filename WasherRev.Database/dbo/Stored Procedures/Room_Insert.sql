@@ -15,4 +15,6 @@ BEGIN
 		@BuildingId,
 		@IsActive
 	)
+
+	SELECT SCOPE_IDENTITY()
 END

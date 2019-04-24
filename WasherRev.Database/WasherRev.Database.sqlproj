@@ -99,5 +99,10 @@
     <Build Include="dbo\Stored Procedures\Washer_Insert.sql" />
     <Build Include="dbo\Stored Procedures\Washer_GetById.sql" />
     <Build Include="dbo\Stored Procedures\Washer_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Users_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Users_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Users_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Users_Remove.sql" />
+    <Build Include="dbo\Stored Procedures\Users_Insert.sql" />
   </ItemGroup>
 </Project>

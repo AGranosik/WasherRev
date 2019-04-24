@@ -7,4 +7,6 @@ BEGIN
 	INSERT INTO [dbo].[Producer] VALUES
 	(@Name,
 	@ServicePhoneNo)
+
+	SELECT SCOPE_IDENTITY()
 END

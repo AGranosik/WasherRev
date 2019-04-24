@@ -15,4 +15,6 @@ BEGIN
 	@SinceWhen,
 	@IsActive,
 	@WorkedTo)
+
+	SELECT SCOPE_IDENTITY()
 END
