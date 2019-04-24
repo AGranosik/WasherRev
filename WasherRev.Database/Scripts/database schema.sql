@@ -91,6 +91,7 @@ BEGIN
 		RoleNo INT NOT NULL,
 		Username varchar(256) NOT NULL UNIQUE,
 		Password varchar(MAX) NOT NULL,
+		Salt varchar(MAX) NOT NULL,
 		Email varchar(256) NOT NULL,
 		RoomId INT NULL,
 		IsActive bit default (1)
