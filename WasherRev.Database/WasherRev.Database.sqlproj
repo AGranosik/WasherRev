@@ -64,12 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\database schema.sql" />
-    <Build Include="dbo\Tables\WasherRoomHistory.sql" />
     <Build Include="dbo\Tables\Washer.sql" />
     <Build Include="dbo\Tables\Users.sql" />
     <Build Include="dbo\Tables\Room.sql" />
     <Build Include="dbo\Tables\Reservation.sql" />
-    <Build Include="dbo\Tables\BuildingUsersHistory.sql" />
     <Build Include="dbo\Tables\BuildingUser.sql" />
     <Build Include="dbo\Tables\Building.sql" />
   </ItemGroup>
@@ -104,5 +102,18 @@
     <Build Include="dbo\Stored Procedures\Users_Update.sql" />
     <Build Include="dbo\Stored Procedures\Users_Remove.sql" />
     <Build Include="dbo\Stored Procedures\Users_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Reservation_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Reservation_Remove.sql" />
+    <Build Include="dbo\Stored Procedures\Reservation_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Reservation_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Reservation_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\BuildingUser_Update.sql" />
+    <Build Include="dbo\Stored Procedures\BuildingUser_Remove.sql" />
+    <Build Include="dbo\Stored Procedures\BuildingUser_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\BuildingUser_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\BuildingUser_GetAll.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="WasherRev.Database.refactorlog" />
   </ItemGroup>
 </Project>
