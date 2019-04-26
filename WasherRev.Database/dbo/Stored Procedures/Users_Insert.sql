@@ -3,7 +3,7 @@
 	@Username varchar(256),
 	@Password varchar(MAX),
 	@Email varchar(256),
-	@RoomId INT,
+	@BuildingId INT,
 	@IsActive bit,
 	@Salt varchar(MAX)
 )
@@ -14,7 +14,7 @@ BEGIN
 		@Username,
 		@Password,
 		@Email,
-		@RoomId,
+		@BuildingId,
 		@IsActive,
 		@Salt
 	)

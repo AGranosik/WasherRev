@@ -4,7 +4,7 @@
 	@Username varchar(256),
 	@Password varchar(MAX),
 	@Email varchar(256),
-	@RoomId INT,
+	@BuildingId INT,
 	@IsActive bit,
 	@Salt varchar(MAX)
 )
@@ -16,7 +16,7 @@ BEGIN
 	[Username] = [Username],
 	[Password] = ISNULL(@Password, Password),
 	[Email] = ISNULL(@Email, Email),
-	[RoomId] = ISNULL(@RoomId, RoomId),
+	[BuildingId] = ISNULL(@BuildingId, BuildingId),
 	[IsActive] = [IsActive],
 	[Salt] = [Salt]
 	WHERE Id = @Id

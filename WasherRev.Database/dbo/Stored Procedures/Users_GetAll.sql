@@ -8,7 +8,7 @@ BEGIN
 	[Password],
 	[Salt],
 	[Email],
-	[RoomId],
+	[BuildingId],
 	[IsActive]
 	FROM [dbo].[Users]
 	WHERE [IsActive] = 1

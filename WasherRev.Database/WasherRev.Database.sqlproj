@@ -113,6 +113,9 @@
     <Build Include="dbo\Stored Procedures\BuildingUser_GetById.sql" />
     <Build Include="dbo\Stored Procedures\BuildingUser_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\Reservation_GenerateEmptyReservations.sql" />
+    <Build Include="dbo\Stored Procedures\Reservation_RemoveUnsetReservations.sql" />
+    <Build Include="dbo\Stored Procedures\Reservation_UsersReservations.sql" />
+    <Build Include="dbo\Stored Procedures\Reservation_GetForUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="WasherRev.Database.refactorlog" />
