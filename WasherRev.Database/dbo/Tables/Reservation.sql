@@ -1,10 +1,9 @@
 ﻿CREATE TABLE [dbo].[Reservation] (
     [Id]        INT      IDENTITY (1, 1) NOT NULL,
-    [UsersId]   INT      NOT NULL,
+    [UsersId]   INT      NULL,
     [StartTime] DATETIME NOT NULL,
     [EndTime]   DATETIME NOT NULL,
-    [WasherId]  INT      NULL,
-    [IsDeleted] BIT      DEFAULT ((0)) NULL,
+    [WasherId]  INT      NOT NULL,
     CONSTRAINT [PK_ReservationId] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Reservation_Users] FOREIGN KEY ([UsersId]) REFERENCES [dbo].[Users] ([Id]),
     CONSTRAINT [FK_Reservation_Washer] FOREIGN KEY ([WasherId]) REFERENCES [dbo].[Room] ([Id])

@@ -3,8 +3,7 @@
 	@UsersId INT,
 	@StartTime DATETIME,
 	@EndTime DATETIME,
-	@WasherId INT,
-	@IsDeleted bit
+	@WasherId INT
 )
 AS
 BEGIN
@@ -13,7 +12,6 @@ BEGIN
 		UsersId = ISNULL(@UsersId, UsersId),
 		StartTime = ISNULL(@StartTime, StartTime),
 		EndTime = ISNULL(@EndTime, EndTime),
-		WasherId = ISNULL(@WasherId, WasherId),
-		IsDeleted = IsDeleted
+		WasherId = ISNULL(@WasherId, WasherId)
 	WHERE Id = @Id
 END

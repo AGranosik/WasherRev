@@ -2,8 +2,7 @@
 	@UsersId INT,
 	@StartTime DATETIME,
 	@EndTime DATETIME,
-	@WasherId INT,
-	@IsDeleted bit
+	@WasherId INT
 )
 AS
 BEGIN
@@ -11,8 +10,7 @@ BEGIN
 		@UsersId,
 		@StartTime,
 		@EndTime,
-		@WasherId,
-		@IsDeleted
+		@WasherId
 	)
 
 	SELECT SCOPE_IDENTITY()

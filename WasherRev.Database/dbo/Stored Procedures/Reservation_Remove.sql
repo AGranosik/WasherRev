@@ -3,8 +3,6 @@
 )
 AS
 BEGIN
-	UPDATE [dbo].[Reservation]
-	SET 
-		IsDeleted = 1
+	DELETE FROM [dbo].[Reservation]
 	WHERE Id = @Id
 END

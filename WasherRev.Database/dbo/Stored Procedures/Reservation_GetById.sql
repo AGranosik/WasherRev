@@ -8,8 +8,7 @@ BEGIN
 	[UsersId],
 	[StartTime],
 	[EndTime],
-	[WasherId],
-	[IsDeleted]
+	[WasherId]
 	FROM [dbo].[Reservation]
 	WHERE Id = @Id
 END
