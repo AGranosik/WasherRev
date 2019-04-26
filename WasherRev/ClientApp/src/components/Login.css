@@ -8,6 +8,7 @@ html {
   body {
     font-family: "Poppins", sans-serif;
     height: 100vh;
+    background-color: yellowgreen;
   }
   
   a {
@@ -26,8 +27,6 @@ html {
     margin: 40px 8px 10px 8px; 
     color: #cccccc;
   }
-  
-  
   
   /* STRUCTURE */
   
@@ -115,7 +114,7 @@ html {
     transform: scale(0.95);
   }
   
-  input[type=text] {
+  input[type=text], input[type=password] {
     background-color: #f6f6f6;
     border: none;
     color: #0d0d0d;

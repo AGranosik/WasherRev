@@ -2,39 +2,58 @@
 import { Link } from 'react-router-dom';
 import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { connect } from 'react-redux';
 import './NavMenu.css';
 
-export default props => (
-  <Navbar inverse fixedTop fluid collapseOnSelect>
-    <Navbar.Header>
-      <Navbar.Brand>
-        <Link to={'/'}>WasherRev</Link>
-      </Navbar.Brand>
-      <Navbar.Toggle />
-    </Navbar.Header>
-    <Navbar.Collapse>
-      <Nav>
-        <LinkContainer to={'/'} exact>
-          <NavItem>
-            <Glyphicon glyph='home' /> Home
-          </NavItem>
-        </LinkContainer>
-        <LinkContainer to={'/counter'}>
-          <NavItem>
-            <Glyphicon glyph='education' /> Counter
-          </NavItem>
-        </LinkContainer>
-        <LinkContainer to={'/fetchdata'}>
-          <NavItem>
-            <Glyphicon glyph='th-list' /> Fetch data
-          </NavItem>
-        </LinkContainer>
-        <LinkContainer to={'/login'}>
-          <NavItem>
-            <Glyphicon glyph='th-list' /> Login
-          </NavItem>
-        </LinkContainer>
-      </Nav>
-    </Navbar.Collapse>
-  </Navbar>
-);
+
+class NavMenu extends React.Component{
+
+  adminPanel = () =>{
+      if(this.props.isAdmin){
+          return (
+            <LinkContainer to={'/users'} exact>
+            <NavItem>
+              <Glyphicon glyph='user' /> Uzytkownicy
+            </NavItem>
+          </LinkContainer>
+          );
+      }
+      else{
+          return <div>no admin panel</div>
+      }
+  }
+
+  render(){
+    return(
+      <Navbar inverse fixedTop fluid collapseOnSelect>
+      <Navbar.Header>
+        <Navbar.Brand>
+          <Link to={'/'}>System rezerwacji pralek</Link>
+        </Navbar.Brand>
+        <Navbar.Toggle />
+      </Navbar.Header>
+      <Navbar.Collapse>
+        <Nav>
+          <LinkContainer to={'/'} exact>
+            <NavItem>
+              <Glyphicon glyph='home' /> Home
+            </NavItem>
+          </LinkContainer>
+          {this.adminPanel()}
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
+    );
+  }
+}
+
+const mapStateToProps = (state) =>{
+  const user = state.user;
+  var isAdmin = false;
+  if(user){
+      isAdmin = ( user.role === 'Admin' ) ? true : false;
+  }
+  return { isAdmin: isAdmin }
+}
+
+export default connect(mapStateToProps)(NavMenu);
