@@ -112,6 +112,7 @@
     <Build Include="dbo\Stored Procedures\BuildingUser_Insert.sql" />
     <Build Include="dbo\Stored Procedures\BuildingUser_GetById.sql" />
     <Build Include="dbo\Stored Procedures\BuildingUser_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Reservation_GenerateEmptyReservations.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="WasherRev.Database.refactorlog" />
