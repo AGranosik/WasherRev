@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using WasherRev.Backend.Repository;
+using WasherRev.Backend.Repository.Interface;
+using WasherRev.Common.ConfigurationModel;
 using WasherRev.test;
 
 namespace WasherRev
@@ -52,7 +55,7 @@ namespace WasherRev
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
-
+            services.AddSingleton<IConfiguration>(Configuration);
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

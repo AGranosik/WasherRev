@@ -7,6 +7,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using WasherRev.Backend.Repository;
+using WasherRev.Common.Model;
 
 namespace WasherRev.test
 {
@@ -36,6 +38,10 @@ namespace WasherRev.test
         public User Authenticate(string username, string password)
         {
             var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
+
+            var sss = new BaseRepository<Building>();
+
+            var asdad = sss.GetAll();
 
             // return null if user not found
             if (user == null)
