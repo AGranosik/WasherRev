@@ -5,7 +5,7 @@
     [Password] VARCHAR (MAX) NOT NULL,
     [Email]    VARCHAR (256) NOT NULL,
     [BuildingId]   INT           NOT NULL,
-    [IsActive] BIT           DEFAULT ((1)) NULL,
+    [IsActive] BIT           DEFAULT ((1)) NOT NULL,
     [Salt]     VARCHAR (MAX) NOT NULL,
     CONSTRAINT [PK_UsersId] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Users_Room] FOREIGN KEY ([BuildingId]) REFERENCES [dbo].[Room] ([Id]),
