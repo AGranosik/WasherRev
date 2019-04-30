@@ -12,6 +12,7 @@ using WasherRev.Backend.Repository;
 using WasherRev.Backend.Repository.Interface;
 using WasherRev.Common.ConfigurationModel;
 using WasherRev.test;
+using AutoMapper;
 
 namespace WasherRev
 {
@@ -28,7 +29,7 @@ namespace WasherRev
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            services.AddAutoMapper();
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 

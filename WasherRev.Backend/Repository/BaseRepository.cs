@@ -11,7 +11,7 @@ namespace WasherRev.Backend.Repository
 {
     public class BaseRepository<TModel> : IBaseRepository<TModel>
     {
-        private string connectionString;
+        protected string connectionString;
 
         public BaseRepository(IConfiguration configuration)
         {
@@ -85,7 +85,7 @@ namespace WasherRev.Backend.Repository
             }
         }
 
-        private DynamicParameters GetDynamicParameters(TModel model, bool withId = false)
+        protected DynamicParameters GetDynamicParameters(TModel model, bool withId = false)
         {
             var properties = typeof(TModel).GetProperties();
             DynamicParameters parameters = new DynamicParameters();

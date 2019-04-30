@@ -8,7 +8,9 @@ namespace WasherRev.Common.DTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int RoomId { get; set; }
         public RoomDTO Room { get; set; }
+        public int ProducerId { get; set; }
         public ProducerDTO Producer { get; set; }
         public DateTime SinceWhne { get; set; }
         public bool IsActive { get; set; }

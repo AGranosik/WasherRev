@@ -39,10 +39,6 @@ namespace WasherRev.test
         {
             var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
 
-            var sss = new BaseRepository<Building>();
-
-            var asdad = sss.GetAll();
-
             // return null if user not found
             if (user == null)
                 return null;

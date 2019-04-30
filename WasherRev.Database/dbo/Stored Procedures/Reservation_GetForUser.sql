@@ -13,7 +13,13 @@ BEGIN
 	INNER JOIN [dbo].[Room] r ON r.Id = w.RoomId
 	where r.[BuildingId] = @BuildingId
 
-	SELECT * FROM [dbo].[Reservation] r
+	SELECT 
+	r.[Id],
+	r.[UsersId],
+	r.[StartTime],
+	r.[EndTime],
+	r.[WasherId]
+	FROM [dbo].[Reservation] r
 	INNER JOIN @Washer w ON w.Id = r.WasherId
 	WHERE r.[UsersId] IS NULL
 	AND
