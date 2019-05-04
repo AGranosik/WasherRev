@@ -8,11 +8,35 @@ using WasherRev.Backend.Repository.Interface;
 using WasherRev.Backend.Services.Interfaces;
 using WasherRev.Common.DTO;
 using WasherRev.Common.Model;
+using System.Linq;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using WasherRev.Common.Enums;
+using WasherRev.Common.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WasherRev.Backend.Services
 {
+    [Produces("application/json")]
+    [Route("api/[controller]")]
     public class UsersService : BaseService<IUsersRepository, Users>, IUsersService
     {
+
+        private List<Users> mockList = new List<Users>
+        {
+            new Users
+            {
+                Id = 1,
+                Username = "admin",
+                Salt = "1538510101653331210551178015792467638",
+                Password = "MTUzODUxMDEwMTY1MzMzMYAlrryBJvXVMoOdPjKDOZAqVIjM",
+                BuildingId = 2,
+                Email = "mail@mail.pl",
+                IsActive = true,
+                RoleNo = 1
+            }
+        };
 
         protected readonly IBuildingRepository _buildingRepository;
         public UsersService(
@@ -54,6 +78,15 @@ namespace WasherRev.Backend.Services
             return await ConvertToDto(updatedModel);
         }
 
+        public Users GetByUserNameAsync(string username)
+        {
+            var user = mockList.Where(x => x.Username.Equals(username)).FirstOrDefault();
+
+            return user;
+
+            //return await ConvertToDto(await _repository.GetByUserNameAsync(username));
+        }
+
         protected async Task<UsersDTO> ConvertToDto(Users model)
         {
             var dto = _mapper.Map<Users, UsersDTO>(model);
@@ -71,52 +104,60 @@ namespace WasherRev.Backend.Services
         }
 
         #region Authentication
+
+        public UsersDTO Autheticate(string username, string password)
+        {
+            var user = GetByUserNameAsync(username);
+            if (user != null)
+            {
+                // check password
+                if (GenerateSaltedPassword(password, user.Salt).Equals(user.Password))
+                {
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var key = Encoding.ASCII.GetBytes("adsdfhjfjhdfgkjldfgdsdflksdjglkfdjgdfiojga;sldjapdjfsdsfjfgpdgjpgre");
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = new ClaimsIdentity(new Claim[]
+                        {
+                        new Claim(ClaimTypes.Name, user.Id.ToString()),
+                        new Claim(ClaimTypes.Role, "Admin")
+                        }),
+                        Expires = DateTime.UtcNow.AddDays(7),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                    };
+                    var token = tokenHandler.CreateToken(tokenDescriptor);
+                    user.Token = tokenHandler.WriteToken(token);
+
+                    UsersDTO dto = _mapper.Map<Users, UsersDTO>(user);
+                    dto.RoleNo = (ERole)user.RoleNo;
+                    dto.RoleName = dto.RoleNo.RoleNoToRoleName();
+                    return dto;
+                }
+            }
+            return null;
+        }
+
         private string GenerateSaltedPassword(string password, string dbSalt = null)
         {
 
             byte[] salt;
-
             if (dbSalt == null)
-                salt = GenerateSalt();
+            {
+                new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+            }
             else
+            {
                 salt = Encoding.ASCII.GetBytes(dbSalt);
-
-            var hashedPassword = HashPasswordWithSalt(Encoding.UTF8.GetBytes(password), salt);
-
-            return Encoding.ASCII.GetString(hashedPassword, 0, hashedPassword.Length);
-        }
-
-        private byte[] GenerateSalt()
-        {
-            const int saltLength = 32;
-
-            using (var randomNumberGenerator = new RNGCryptoServiceProvider())
-            {
-                var randomNumber = new byte[saltLength];
-                randomNumberGenerator.GetBytes(randomNumber);
-
-                return randomNumber;
             }
-        }
+            Console.WriteLine();
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
 
-        private byte[] Combine(byte[] first, byte[] second)
-        {
-            var ret = new byte[first.Length + second.Length];
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
 
-            Buffer.BlockCopy(first, 0, ret, 0, first.Length);
-            Buffer.BlockCopy(second, 0, ret, first.Length, second.Length);
-
-            return ret;
-        }
-
-        private byte[] HashPasswordWithSalt(byte[] toBeHashed, byte[] salt)
-        {
-            using (var sha256 = SHA256.Create())
-            {
-                var combinedHash = Combine(toBeHashed, salt);
-
-                return sha256.ComputeHash(combinedHash);
-            }
+            return Convert.ToBase64String(hashBytes);
         }
         #endregion
     }

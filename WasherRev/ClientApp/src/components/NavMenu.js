@@ -51,7 +51,7 @@ const mapStateToProps = (state) =>{
   const user = state.user;
   var isAdmin = false;
   if(user){
-      isAdmin = ( user.role === 'Admin' ) ? true : false;
+      isAdmin = ( user.roleName === 'Admin' ) ? true : false;
   }
   return { isAdmin: isAdmin }
 }

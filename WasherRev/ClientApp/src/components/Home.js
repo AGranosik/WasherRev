@@ -9,6 +9,7 @@ class Home extends React.Component{
         if(this.props.isAdmin){
             return <HomeAdmin />
         }
+        return <div>ssss</div>
     }
 
 
@@ -26,7 +27,7 @@ const mapStateToProps = (state) => {
     const user = state.user;
     var isAdmin = false;
     if(user){
-        isAdmin = ( user.role === 'Admin' ) ? true : false;
+        isAdmin = ( user.roleName === "Admin" ) ? true : false;
     }
     return { isAdmin: isAdmin }
 };

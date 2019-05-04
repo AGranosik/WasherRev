@@ -3,18 +3,17 @@ import { SIGN_IN } from '../actions/types';
 const initialState = {
         userId: null,
         token: '',
-        role: '',
+        roleName: '',
         username: ''
 };
 
 export const reducer = (state, action) => {
-    state = state || initialState; 
-
+    state = state || initialState;
     switch(action.type){
         case SIGN_IN :{
-            const { role, token, id, username } = action.payload;
+            const { roleName, token, id, username } = action.payload;
             return { ...state,
-                role: role,
+                roleName: roleName,
                 userId: id,
                 token: token,
                 username: username

@@ -9,5 +9,7 @@ namespace WasherRev.Backend.Services.Interfaces
 {
     public interface IReservationService : IBaseDtoService<ReservationDTO>
     {
+        Task<List<ReservationDTO>> GetReservationsForUser(DateTime date, int buildingId);
+        Task<List<ReservationDTO>> GetUsersReervations(DateTime? date, int usersId);
     }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { Table } from 'react-bootstrap';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 class UsersAdmin extends React.Component{
 
@@ -8,17 +8,20 @@ class UsersAdmin extends React.Component{
         if(!this.props.users)
             return <div>Loading...</div>
 
-        console.log(this.props);
-    }
 
-    componentDidMount(){
-        this.renderTableContent();
+        return (
+            <BootstrapTable data={this.props.users} striped hover>
+                <TableHeaderColumn isKey dataField='id'>Product ID</TableHeaderColumn>
+                <TableHeaderColumn dataField='username'>Username</TableHeaderColumn>
+                </BootstrapTable>
+            );
     }
 
     render(){
-        return(
-            <div>Users</div>
-        );
+        return (this.renderTableContent());
+        //return (
+            //<div>sssss</div>
+           // );
     }
 }
 

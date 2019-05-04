@@ -8,33 +8,33 @@ import { Route } from "react-router-dom";
 
 class App extends React.Component{
 
-  properView = () => {
-    if(this.props.user.userId){
+    properView = () => {
+        if (this.props.user.userId) {
 
-      if(this.props.user.role === 'Admin'){
+            if (this.props.user.roleName === 'Admin') {
+                return (
+                    <Layout>
+                        <Route exact path='/' component={Home} />
+                        <Route exact path='/users' component={Users} />
+                    </Layout>
+                );
+            }
+
+            return (
+                <div>no admin</div>
+            );
+
+        }
+        else {
+            return <Login />
+        }
+    };
+
+    render() {
         return (
-          <Layout>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/users' component={Users} />
-          </Layout>
-      );
-      }
-
-      return(
-        <div>no admin</div>
-      );
-
+            this.properView()
+        );
     }
-    else{
-      return <Login />
-    }
-  };
-
-  render(){
-    return(
-      this.properView()
-    );
-  }
 
 }
 

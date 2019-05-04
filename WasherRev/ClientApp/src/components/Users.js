@@ -2,7 +2,13 @@ import React from 'react';
 import UsersAdmin from '../AdminViews/UsersAdmin';
 
 class Users extends React.Component{
-    render(){
+
+    componentDidMount() {
+        console.log('mount');
+    }
+
+    render() {
+        console.log('here');
         return(
             <UsersAdmin />
         );

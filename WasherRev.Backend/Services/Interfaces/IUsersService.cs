@@ -9,5 +9,7 @@ namespace WasherRev.Backend.Services.Interfaces
 {
     public interface IUsersService : IBaseDtoService<UsersDTO>
     {
+        Users GetByUserNameAsync(string username);
+        UsersDTO Autheticate(string username, string password);
     }
 }

@@ -4,6 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WasherRev.Api.Controllers;
+using WasherRev.Backend.Services.Interfaces;
+using WasherRev.Common.Attributes;
+using WasherRev.Common.DTO;
+using WasherRev.Common.Enums;
+using WasherRev.Common.Model;
 using WasherRev.test;
 
 namespace WasherRev.Controllers
@@ -11,20 +17,17 @@ namespace WasherRev.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseActionDtoController<IUsersService, UsersDTO>
     {
-        private IUserService _userService;
-
-        public UsersController(IUserService userService)
+        public UsersController(IUsersService service) : base(service)
         {
-            _userService = userService;
         }
 
         [AllowAnonymous]
         [HttpPost("[action]")]
         public IActionResult Authenticate([FromBody]User userParam)
         {
-            var user = _userService.Authenticate(userParam.Username, userParam.Password);
+            var user = _service.Autheticate(userParam.Username, userParam.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -32,32 +35,41 @@ namespace WasherRev.Controllers
             return Ok(user);
         }
 
-        [Authorize(Roles = Role.Admin)]
+        [AuthorizeRoles(ERole.Admin)]
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var users = _userService.GetAll();
-            return Ok(users);
+            return await RunGetActionListAsync(() => _service.GetAllDTO());
         }
 
+        [AuthorizeRoles(ERole.Admin)]
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var user = _userService.GetById(id);
+            return await RunGetActionAsync(() => _service.GetDTOById(id));
+        }
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+        [AuthorizeRoles(ERole.Admin)]
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] UsersDTO user)
+        {
+            return await RunInsertActionAsync(() => _service.Insert(user));
+        }
 
-            // only allow admins to access other user records
-            var currentUserId = int.Parse(User.Identity.Name);
-            if (id != currentUserId && !User.IsInRole(Role.Admin))
-            {
-                return Forbid();
-            }
 
-            return Ok(user);
+        [AuthorizeRoles(ERole.Admin)]
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] UsersDTO user)
+        {
+            return await RunInsertActionAsync(() => _service.Update(user));
+        }
+
+
+        [AuthorizeRoles(ERole.Admin)]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return await RunDeleteActionAsync(() => _service.Remove(id));
         }
     }
 }

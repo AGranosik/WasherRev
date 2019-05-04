@@ -41,6 +41,28 @@ namespace WasherRev.Backend.Services
             return await ConvertToDTO(await _repository.GetById(id));
         }
 
+        public async Task<List<ReservationDTO>> GetReservationsForUser(DateTime date, int buildingId)
+        {
+            var model = await _repository.GetReservationsForUser(date, buildingId);
+            if(model != null)
+            {
+                var dtos = new List<ReservationDTO>();
+                model.ForEach(async x => dtos.Add(await ConvertToDTO(x)));
+            }
+            return null;
+        }
+
+        public async Task<List<ReservationDTO>> GetUsersReervations(DateTime? date, int usersId)
+        {
+            var model = await _repository.GetUsersReervations(date, usersId);
+            if (model != null)
+            {
+                var dtos = new List<ReservationDTO>();
+                model.ForEach(async x => dtos.Add(await ConvertToDTO(x)));
+            }
+            return null;
+        }
+
         public async Task<ReservationDTO> Insert(ReservationDTO model)
         {
             var resultModel = await _repository.Insert(ConvertToPureModel(model));

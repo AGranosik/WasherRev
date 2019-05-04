@@ -28,7 +28,7 @@ namespace WasherRev.Backend.Repository
                     param: parameters,
                 commandType: System.Data.CommandType.StoredProcedure);
 
-                return result.AsList<Reservation>();
+                return result.AsList();
             }
         }
 
@@ -44,7 +44,7 @@ namespace WasherRev.Backend.Repository
                     param: parameters,
                 commandType: System.Data.CommandType.StoredProcedure);
 
-                return result.AsList<Reservation>();
+                return result.AsList();
             }
         }
     }

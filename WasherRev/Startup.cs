@@ -13,6 +13,8 @@ using WasherRev.Backend.Repository.Interface;
 using WasherRev.Common.ConfigurationModel;
 using WasherRev.test;
 using AutoMapper;
+using WasherRev.Backend.Services.Interfaces;
+using WasherRev.Backend.Services;
 
 namespace WasherRev
 {
@@ -55,8 +57,20 @@ namespace WasherRev
             });
 
             // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
-            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IBuildingRepository, BuildingRepository>();
+            services.AddScoped<IBuildingUserRepository, BuildingUserRepository>();
+            services.AddScoped<IProducerRepository, ProducerRepository>();
+            services.AddScoped<IReservationRepository, ReservationRepository>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IWasherRepository, WasherRepository>();
+            services.AddScoped<IBuildingService, BuildingService>();
+            services.AddScoped<IProducerService, ProducerService>();
+            services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IWasherService, WasherService>();
+            //services.AddSingleton<IConfiguration>(Configuration);
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
