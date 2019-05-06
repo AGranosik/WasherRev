@@ -10,6 +10,8 @@ using WasherRev.Common.Enums;
 
 namespace WasherRev.Api.Controllers
 {
+    [Produces("application/json")]
+    [Route("api/[controller]")]
     public class ProducerController : BaseActionDtoController<IProducerService, ProducerDTO>
     {
         public ProducerController(IProducerService service) : base(service)
