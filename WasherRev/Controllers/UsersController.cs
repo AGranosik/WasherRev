@@ -25,9 +25,9 @@ namespace WasherRev.Controllers
 
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public IActionResult Authenticate([FromBody]User userParam)
+        public async Task<IActionResult> Authenticate([FromBody]User userParam)
         {
-            var user = _service.Autheticate(userParam.Username, userParam.Password);
+            var user = await RunGetActionAsync(() => _service.Autheticate(userParam.Username, userParam.Password));
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });

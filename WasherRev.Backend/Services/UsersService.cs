@@ -22,22 +22,6 @@ namespace WasherRev.Backend.Services
     [Route("api/[controller]")]
     public class UsersService : BaseService<IUsersRepository, Users>, IUsersService
     {
-
-        private List<Users> mockList = new List<Users>
-        {
-            new Users
-            {
-                Id = 1,
-                Username = "admin",
-                Salt = "1538510101653331210551178015792467638",
-                Password = "MTUzODUxMDEwMTY1MzMzMYAlrryBJvXVMoOdPjKDOZAqVIjM",
-                BuildingId = 2,
-                Email = "mail@mail.pl",
-                IsActive = true,
-                RoleNo = 1
-            }
-        };
-
         protected readonly IBuildingRepository _buildingRepository;
         public UsersService(
             IMapper mapper,
@@ -78,13 +62,9 @@ namespace WasherRev.Backend.Services
             return await ConvertToDto(updatedModel);
         }
 
-        public Users GetByUserNameAsync(string username)
+        public async Task<UsersDTO> GetByUserNameAsync(string username)
         {
-            var user = mockList.Where(x => x.Username.Equals(username)).FirstOrDefault();
-
-            return user;
-
-            //return await ConvertToDto(await _repository.GetByUserNameAsync(username));
+            return await ConvertToDto(await _repository.GetByUserNameAsync(username));
         }
 
         protected async Task<UsersDTO> ConvertToDto(Users model)
@@ -105,14 +85,18 @@ namespace WasherRev.Backend.Services
 
         #region Authentication
 
-        public UsersDTO Autheticate(string username, string password)
+        public async Task<UsersDTO> Autheticate(string username, string password)
         {
-            var user = GetByUserNameAsync(username);
+            var user = await _repository.GetByUserNameAsync(username);
             if (user != null)
             {
                 // check password
                 if (GenerateSaltedPassword(password, user.Salt).Equals(user.Password))
                 {
+                    UsersDTO dto = _mapper.Map<Users, UsersDTO>(user);
+                    dto.RoleNo = (ERole)user.RoleNo;
+                    dto.RoleName = dto.RoleNo.RoleNoToRoleName();
+
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var key = Encoding.ASCII.GetBytes("adsdfhjfjhdfgkjldfgdsdflksdjglkfdjgdfiojga;sldjapdjfsdsfjfgpdgjpgre");
                     var tokenDescriptor = new SecurityTokenDescriptor
@@ -120,17 +104,15 @@ namespace WasherRev.Backend.Services
                         Subject = new ClaimsIdentity(new Claim[]
                         {
                         new Claim(ClaimTypes.Name, user.Id.ToString()),
-                        new Claim(ClaimTypes.Role, "Admin")
+                        new Claim(ClaimTypes.Role, dto.RoleName)
                         }),
                         Expires = DateTime.UtcNow.AddDays(7),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                     };
                     var token = tokenHandler.CreateToken(tokenDescriptor);
-                    user.Token = tokenHandler.WriteToken(token);
+                    dto.Token = tokenHandler.WriteToken(token);
 
-                    UsersDTO dto = _mapper.Map<Users, UsersDTO>(user);
-                    dto.RoleNo = (ERole)user.RoleNo;
-                    dto.RoleName = dto.RoleNo.RoleNoToRoleName();
+
                     return dto;
                 }
             }

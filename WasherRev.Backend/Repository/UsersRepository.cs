@@ -18,17 +18,27 @@ namespace WasherRev.Backend.Repository
 
         public async Task<Users> GetByUserNameAsync(string username)
         {
-            using(var conn = new SqlConnection(connectionString))
+            //using(var conn = new SqlConnection(connectionString))
+            //{
+            try
             {
+                var conn = new SqlConnection(connectionString);
+
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@Username", username);
 
-                var result = await conn.QuerySingleAsync<Users>("Users_GetByUsername",
+                var result = await conn.QuerySingleAsync<Users>("Users_GetByLogin",
                     param: parameters,
                     commandType: System.Data.CommandType.StoredProcedure);
 
                 return result;
             }
+            catch(Exception ex)
+            {
+                return null;
+            }
+
+            //}
         }
     }
 }

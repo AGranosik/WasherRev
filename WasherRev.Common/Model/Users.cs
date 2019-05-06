@@ -14,6 +14,5 @@ namespace WasherRev.Common.Model
         public int BuildingId { get; set; }
         public bool IsActive { get; set; }
         public string Salt { get; set; }
-        public string Token { get; set; }
     }
 }

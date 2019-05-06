@@ -38,7 +38,7 @@ namespace WasherRev.Backend.Repository
                 parameters.Add("@Id", id);
 
                 var result = await conn.QuerySingleAsync<TModel>(
-                    $"{typeof(TModel).Name}_GetAll",
+                    $"{typeof(TModel).Name}_GetById",
                     param: parameters,
                     commandType: System.Data.CommandType.StoredProcedure
                     );

@@ -34,3 +34,6 @@ INSERT INTO Washer values ('washer4', 2, 1, '04-02-2018', 1, null)
 INSERT INTO Washer values ('washer5', 2, 1, '05-02-2018', 1, null)
 INSERT INTO Washer values ('washer6', 4, 1, '06-02-2018', 1, null)
 INSERT INTO Washer values ('washer7', 5, 1, '07-02-2018', 1, null)
+
+--Users, admin
+INSERT INTO Users values (1, 'admin', 'YXNzYWRhZGFzZGFzZGFzZBf/F3D6NkK/7bR/wOfA9gCDMx7C', 'meil@meil.pl', 1, 1, 'assadadasdasdasdasddasdasd')
