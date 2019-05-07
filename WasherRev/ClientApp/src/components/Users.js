@@ -1,14 +1,13 @@
 import React from 'react';
 import UsersAdmin from '../AdminViews/UsersAdmin';
-
+import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css';
+import '../../node_modules/react-bootstrap-table/dist/react-bootstrap-table.min.css';
 class Users extends React.Component{
 
     componentDidMount() {
-        console.log('mount');
     }
 
     render() {
-        console.log('here');
         return(
             <UsersAdmin />
         );

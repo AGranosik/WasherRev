@@ -10,5 +10,5 @@ export const signIn = (formValues) => async dispatch => {
         }
     );
 
-    dispatch({ type: SIGN_IN, payload: response.data})
+    dispatch({ type: SIGN_IN, payload: response.data.value })
 }

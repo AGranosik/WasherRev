@@ -11,5 +11,6 @@ namespace WasherRev.Backend.Services.Interfaces
     {
         Task<UsersDTO> GetByUserNameAsync(string username);
         Task<UsersDTO> Autheticate(string username, string password);
+        Task<List<FullUsersDTO>> GetFullInfo();
     }
 }

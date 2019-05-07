@@ -1,16 +1,19 @@
-import { USERS_GETALL } from "../actions/types";
+import {
+    USERS_GETALL,
+    USERS_DELETE,
+    USERS_GETFULLINFO
+} from "../actions/types";
 
-const initialState = {
-    users: []
-}
+const initialState = [];
 
 export const usersReducer = (state, action) => {
     state = state || initialState;
 
     switch (action.type) {
         case USERS_GETALL:
-            return {...state, users: action.payload}
-    
+            return action.payload;
+        case USERS_GETFULLINFO:
+            return action.payload;
         default:
             return state;
     }

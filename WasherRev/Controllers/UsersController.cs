@@ -43,6 +43,15 @@ namespace WasherRev.Controllers
         }
 
         [AuthorizeRoles(ERole.Admin)]
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetFullInfo()
+        {
+            var list = await _service.GetFullInfo();
+
+            return Ok(list);
+        }
+
+        [AuthorizeRoles(ERole.Admin)]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -61,7 +70,7 @@ namespace WasherRev.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] UsersDTO user)
         {
-            return await RunInsertActionAsync(() => _service.Update(user));
+            return await RunUpdateActionAsync(() => _service.Update(user));
         }
 
 

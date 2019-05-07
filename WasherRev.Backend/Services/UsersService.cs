@@ -36,7 +36,12 @@ namespace WasherRev.Backend.Services
             var models = await _repository.GetAll();
             var dtos = new List<UsersDTO>();
 
-            models.ForEach(async x => dtos.Add(await ConvertToDto(x)));
+            foreach(var model in models)
+            {
+                var tmp = await ConvertToDto(model);
+                dtos.Add(tmp);
+            }
+            
 
             return dtos;
         }
@@ -72,6 +77,7 @@ namespace WasherRev.Backend.Services
             var dto = _mapper.Map<Users, UsersDTO>(model);
 
             dto.Building = _mapper.Map<Building, BuildingDTO>(await _buildingRepository.GetById(model.BuildingId));
+            dto.RoleName = dto.RoleNo.RoleNoToRoleName();
             return dto;
         }
 
@@ -81,6 +87,22 @@ namespace WasherRev.Backend.Services
             pureModel.BuildingId = dto.Building.Id;
 
             return pureModel;
+        }
+
+        public async Task<List<FullUsersDTO>> GetFullInfo()
+        {
+            var pureModels = await _repository.GetAll();
+            var dtos = new List<FullUsersDTO>();
+            foreach(var model in pureModels)
+            {
+                var dto = _mapper.Map<Users, FullUsersDTO>(model);
+                dto.Building = _mapper.Map<Building, BuildingDTO>(await _buildingRepository.GetById(model.BuildingId));
+                dto.RoleName = dto.RoleNo.RoleNoToRoleName();
+
+                dtos.Add(dto);
+            }
+
+            return dtos;
         }
 
         #region Authentication
@@ -141,6 +163,8 @@ namespace WasherRev.Backend.Services
 
             return Convert.ToBase64String(hashBytes);
         }
+
+
         #endregion
     }
 }

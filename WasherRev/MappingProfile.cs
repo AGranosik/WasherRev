@@ -19,6 +19,8 @@ namespace WasherRev.Api
             CreateMap<Room, RoomDTO>().ReverseMap();
             CreateMap<Reservation, ReservationDTO>().ReverseMap();
             CreateMap<Washer, WasherDTO>().ReverseMap();
+            CreateMap<Users, FullUsersDTO>().ReverseMap();
+
         }
     }
 }

@@ -26,6 +26,4 @@ export const reducer = (state, action) => {
                 initialState
             }
     }
-
-    return state;
 }

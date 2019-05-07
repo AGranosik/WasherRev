@@ -38,7 +38,7 @@ class App extends React.Component{
 
 }
 
-const mapStateToProps = (state, cos) => {
+const mapStateToProps = (state) => {
   return {user: state.user};
 };
 
