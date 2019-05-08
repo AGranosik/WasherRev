@@ -3,6 +3,8 @@ import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 import * as User from './User';
 import { usersReducer } from '../reducers/usersReducer';
+import { buildingReducer } from '../reducers/buildingReducer';
+
 
 
 export default function configureStore(history, initialState) {
@@ -22,7 +24,8 @@ export default function configureStore(history, initialState) {
   const rootReducer = combineReducers({
     routing: routerReducer,
     user: User.reducer,
-    users: usersReducer
+    users: usersReducer,
+    buildings: buildingReducer
   });
 
   return createStore(

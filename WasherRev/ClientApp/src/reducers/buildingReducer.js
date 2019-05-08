@@ -4,7 +4,7 @@ import {
 
 const initialState = [];
 
-export const usersReducer = (state, action) => {
+export const buildingReducer = (state, action) => {
     state = state || initialState;
 
     switch (action.type) {

@@ -4,6 +4,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import {
   users_getFullInfo,
   users_delete } from '../actions/UsersActions';
+  import apiProvider from '../api/apiProvider';
   import Dropdown from 'react-dropdown'
   import 'react-dropdown/style.css'
 
@@ -12,14 +13,32 @@ import {
     constructor(props){
       super(props);
       this.state = {
-        selectedValue: 0
+        selectedValue: 0,
+        buildings: []
       };
     }
 
-
+    async componentDidMount(){
+      var response = await apiProvider(this.props.token).get('/api/Building');
+      this.setState({
+        buildings: response.data
+      });
+    }
 
     getFieldValue = () => {
       return this.state.selectedValue;
+    }
+
+    getOptions = () => {
+      const { buildings } = this.state;
+      if(buildings){
+        return buildings.map((element) => {
+          return {
+            value: element.id,
+            label: `${element.name}(${element.street} ${element.streetNo} ${element.postCode})`
+          }
+        })
+      }
     }
 
     onChange = (e) => {
@@ -30,16 +49,10 @@ import {
     }
   
     render() {
-      const options = [
-        { value: 1, label: 'One' },
-        { value: 2, label: 'Two' }
-      ]
-
-      const defaultOption = options[0]
       return (
       <Dropdown
-          options={options}
-          placeholder="Select an option"
+          options={this.getOptions()}
+          placeholder="Wybierz budynek przypisania do użytkownika"
           onChange={this.onChange}
          />
       );
@@ -70,7 +83,7 @@ class UsersAdmin extends React.Component{
 
       customSaleField = (column, attr, editorClass, ignoreEditable) => {
         return (
-          <CustomDropdownInsert ref={ attr.ref } />
+          <CustomDropdownInsert token={ this.props.user.token } ref={ attr.ref } />
         );
       }
 
