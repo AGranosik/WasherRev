@@ -7,6 +7,45 @@ import {
   import Dropdown from 'react-dropdown'
   import 'react-dropdown/style.css'
 
+  class CustomDropdownInsert extends React.Component {
+
+    constructor(props){
+      super(props);
+      this.state = {
+        selectedValue: 0
+      };
+    }
+
+
+
+    getFieldValue = () => {
+      return this.state.selectedValue;
+    }
+
+    onChange = (e) => {
+      console.log(e);
+      this.setState({
+        selectedValue: e.value}
+        );
+    }
+  
+    render() {
+      const options = [
+        { value: 1, label: 'One' },
+        { value: 2, label: 'Two' }
+      ]
+
+      const defaultOption = options[0]
+      return (
+      <Dropdown
+          options={options}
+          placeholder="Select an option"
+          onChange={this.onChange}
+         />
+      );
+    }
+  }
+
 
 class UsersAdmin extends React.Component{
 
@@ -29,28 +68,9 @@ class UsersAdmin extends React.Component{
         console.log(row);
       }
 
-      buildingDropDownList = (column, attr, editorClass, ignoreEditable) => {
-        const options = [
-          { value: 'one', label: 'One' },
-          { value: 'two', label: 'Two', className: 'myOptionClassName' },
-          {
-           type: 'group', name: 'group1', items: [
-             { value: 'three', label: 'Three', className: 'myOptionClassName' },
-             { value: 'four', label: 'Four' }
-           ]
-          },
-          {
-           type: 'group', name: 'group2', items: [
-             { value: 'five', label: 'Five' },
-             { value: 'six', label: 'Six' }
-           ]
-          }
-        ]
-
-        const defaultOption = options[0]
-
+      customSaleField = (column, attr, editorClass, ignoreEditable) => {
         return (
-          <Dropdown ref={attr.ref} editorClass={editorClass} ignoreEditable={ignoreEditable} className={`${editorClass}`} {...attr} options={options} value={defaultOption} placeholder="Select an option" />
+          <CustomDropdownInsert ref={ attr.ref } />
         );
       }
 
@@ -64,7 +84,6 @@ class UsersAdmin extends React.Component{
           const options = {
             afterInsertRow: this.onAfterInsertRow,
             afterDeleteRow: this.onAfterDeleteRow
-
           };
 
 
@@ -82,7 +101,7 @@ class UsersAdmin extends React.Component{
             options={options}>
             <TableHeaderColumn isKey dataField='id'>ID</TableHeaderColumn>
             <TableHeaderColumn hidden dataField='username'>Nazwa użytkownika</TableHeaderColumn>
-            <TableHeaderColumn dataField='buildingId' customInsertEditor={ { getElement: this.buildingDropDownList } }>Budynek</TableHeaderColumn>
+            <TableHeaderColumn dataField='buildingId' customInsertEditor={ { getElement: this.customSaleField } }>Budynek</TableHeaderColumn>
             <TableHeaderColumn dataField='roleName'>Rola</TableHeaderColumn>
             <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
             <TableHeaderColumn hidden dataField='password'>Hasło</TableHeaderColumn>
@@ -94,7 +113,6 @@ class UsersAdmin extends React.Component{
 // add buildingName later
 
 const mapStateToProps = (state) => {
-  console.log(state);
     return {
         user: state.user,
         users: state.users    
