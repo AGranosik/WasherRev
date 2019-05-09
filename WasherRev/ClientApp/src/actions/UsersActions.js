@@ -1,5 +1,5 @@
 import apiProvider from '../api/apiProvider';
-import { USERS_GETALL, USERS_DELETE, USERS_GETFULLINFO } from './types';
+import { USERS_GETALL, USERS_DELETE, USERS_GETFULLINFO, USERS_INSERT } from './types';
 
 export const users_getAll = (token) => async (dispatch) =>{
     const response = await apiProvider(token).get('/api/Users');
@@ -24,6 +24,17 @@ export const users_getFullInfo = (token) => async (dispatch) => {
 
     dispatch({
         type: USERS_GETFULLINFO,
+        payload: response.data
+    });
+}
+
+export const users_insert = (token, model) => async (dispatch) => {
+    const response = await apiProvider(token).post(`api/Users/`, {
+        model
+    });
+
+    dispatch({
+        type: USERS_INSERT,
         payload: response.data
     });
 }

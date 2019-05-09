@@ -13,7 +13,7 @@ class CustomDropDownListModalBody extends React.Component {
     }
 
     async componentDidMount(){
-      console.log('here');
+      console.log(this.props);
       var response = await apiProvider(this.props.token).get(this.props.url);
       this.setState({
         list: response.data
