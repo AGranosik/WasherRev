@@ -14,12 +14,6 @@ import CustomDropDownListModalBody from '../components/common/CustomDropDownList
 
 class UsersAdmin extends React.Component{
 
-/*
-  hadle dbclick on dropdown
-  remove id or find a way to show proper id after insert
-  get BuildingId after edit  
-*/
-
   state = {
     buildings: []
   }
@@ -27,6 +21,7 @@ class UsersAdmin extends React.Component{
     componentDidMount(){
       this.props.users_getFullInfo(this.props.user.token);
       this.getBuildings();
+      console.log(this.props);
     }
 
       onAfterDeleteRow = (row) => {
@@ -42,8 +37,6 @@ class UsersAdmin extends React.Component{
 
       onAfterInsertRow = (row) => {
         console.log(row);
-        
-        return { id: 1};
       }
 
       buildingField = (column, attr, editorClass, ignoreEditable) => {
@@ -76,10 +69,9 @@ class UsersAdmin extends React.Component{
       }
 
       buildingOption = (building) => {
-        console.log('here');
         return {
           value: building.id,
-          label: `${building.id} (${building.name} ${building.street} ${building.streetNo} ${building.postCode})`
+          label: `Nr ${building.id} : ${building.name} ${building.street} ${building.streetNo} ${building.postCode}`
         }
       }
 
@@ -102,7 +94,7 @@ class UsersAdmin extends React.Component{
       getData = () => {
         return this.props.users.map(
           (user) => {
-            return {...user, buildingName: `${user.building.id} (${user.building.name} ${user.building.street} ${user.building.streetNo} ${user.building.postCode})`}
+            return {...user, buildingName: `Nr ${user.building.id} : ${user.building.name} ${user.building.street} ${user.building.streetNo} ${user.building.postCode}`}
           }
         )
       }
@@ -123,11 +115,9 @@ class UsersAdmin extends React.Component{
             afterDeleteRow: this.onAfterDeleteRow,
           };
 
-
-
         return (
         <BootstrapTable
-            data={this.props.users}
+            data={this.getData()}
             striped
             hover
             condensed
@@ -144,8 +134,8 @@ class UsersAdmin extends React.Component{
             }
             options={options}>
             <TableHeaderColumn isKey dataField='username'>Nazwa użytkownika</TableHeaderColumn>
-            <TableHeaderColumn dataField='buildingId' editable={ { type: 'select', options: { values: this.getBuildingsValues() } } } customInsertEditor={ { getElement: this.buildingField } }>Budynek</TableHeaderColumn>
-            <TableHeaderColumn dataField='roleId' customInsertEditor={ { getElement: this.roleField } }>Rola</TableHeaderColumn>
+            <TableHeaderColumn dataField='buildingName' editable={ { type: 'select', options: { values: this.getBuildingsValues() } } } customInsertEditor={ { getElement: this.buildingField } }>Budynek</TableHeaderColumn>
+            <TableHeaderColumn dataField='roleName' customInsertEditor={ { getElement: this.roleField } }>Rola</TableHeaderColumn>
             <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
             <TableHeaderColumn hidden dataField='password'>Hasło</TableHeaderColumn>
         </BootstrapTable>

@@ -47,8 +47,7 @@ class CustomDropDownListModalBody extends React.Component {
     }
 
     onChange = (e) => {
-      console.log(e);
-      this.selectedValue = e.value;
+      this.selectedValue = e.label;
     }
   
     render() {
