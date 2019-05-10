@@ -7,21 +7,34 @@ class CustomDropDownListModalBody extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        selectedValue: 0,
         list: []
       };
     }
 
+    selectedValue = 0;
+
     async componentDidMount(){
-      console.log(this.props);
-      var response = await apiProvider(this.props.token).get(this.props.url);
-      this.setState({
-        list: response.data
-      });
+      if(this.state.list.length == 0){
+        console.log('1');
+        console.log(this.state);
+        var response = await apiProvider(this.props.token).get(this.props.url);
+        this.setState({
+          list: response.data
+        });
+      }
+    }
+
+    async componentDidUpdate(){
+      if(this.state.list.length == 0){
+        var response = await apiProvider(this.props.token).get(this.props.url);
+        this.setState({
+          list: response.data
+        });
+      }
     }
 
     getFieldValue = () => {
-      return this.state.selectedValue || 0;
+      return this.selectedValue || 0;
     }
 
     getOptions = () => {
@@ -35,18 +48,16 @@ class CustomDropDownListModalBody extends React.Component {
 
     onChange = (e) => {
       console.log(e);
-      this.setState({
-        selectedValue: e.value}
-        );
+      this.selectedValue = e.value;
     }
   
     render() {
       return (
       <Dropdown
           options={this.getOptions()}
-          placeholder="Wybierz budynek przypisania do użytkownika"
+          placeholder={this.props.placeholder}
           onChange={this.onChange}
-          value={this.state.selectedValue}
+          value={this.selectedValue}
          />
       );
     }

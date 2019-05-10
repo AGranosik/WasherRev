@@ -52,7 +52,8 @@ class UsersAdmin extends React.Component{
             url='/api/Building'
             token={ this.props.user.token }
             ref={ attr.ref }
-            dropdownOption={this.buildingOption} />
+            dropdownOption={this.buildingOption}
+            placeholder="Wybierz budenek przypisany do użytkownika" />
         );
       }
 
@@ -62,7 +63,8 @@ class UsersAdmin extends React.Component{
             url='api/Role'
             token={ this.props.user.toke }
             ref={ attr.ref }
-            dropdownOption={ this.roleOption } />
+            dropdownOption={ this.roleOption }
+            placeholder="Wybierz rolę"/>
         )
       }
 
@@ -141,8 +143,7 @@ class UsersAdmin extends React.Component{
               }
             }
             options={options}>
-            <TableHeaderColumn isKey hiddenOnInsert autoValue dataField='id'>ID</TableHeaderColumn>
-            <TableHeaderColumn dataField='username'>Nazwa użytkownika</TableHeaderColumn>
+            <TableHeaderColumn isKey dataField='username'>Nazwa użytkownika</TableHeaderColumn>
             <TableHeaderColumn dataField='buildingId' editable={ { type: 'select', options: { values: this.getBuildingsValues() } } } customInsertEditor={ { getElement: this.buildingField } }>Budynek</TableHeaderColumn>
             <TableHeaderColumn dataField='roleId' customInsertEditor={ { getElement: this.roleField } }>Rola</TableHeaderColumn>
             <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
