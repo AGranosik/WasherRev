@@ -103,6 +103,14 @@ class UsersAdmin extends React.Component{
         console.log(row);
       }
 
+      emailValidator = (value, row) => {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(!re.test(String(value).toLowerCase()))
+          return 'Podano niepoprawny email!';
+
+        return true;
+      }
+
     render(){
         var selectRowProp = {
             mode: "checkbox",
@@ -136,7 +144,7 @@ class UsersAdmin extends React.Component{
             <TableHeaderColumn isKey dataField='username'>Nazwa użytkownika</TableHeaderColumn>
             <TableHeaderColumn dataField='buildingName' editable={ { type: 'select', options: { values: this.getBuildingsValues() } } } customInsertEditor={ { getElement: this.buildingField } }>Budynek</TableHeaderColumn>
             <TableHeaderColumn dataField='roleName' customInsertEditor={ { getElement: this.roleField } }>Rola</TableHeaderColumn>
-            <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
+            <TableHeaderColumn dataField='email' editable={ { validator: this.emailValidator } }>Email</TableHeaderColumn>
             <TableHeaderColumn hidden dataField='password'>Hasło</TableHeaderColumn>
         </BootstrapTable>
         );
