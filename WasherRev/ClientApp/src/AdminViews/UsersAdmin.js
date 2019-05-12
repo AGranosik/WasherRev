@@ -37,6 +37,24 @@ class UsersAdmin extends React.Component{
 
       onAfterInsertRow = (row) => {
         console.log(row);
+        var user = {
+          Email: row.email,
+          BuildingId: row.buildingName.split(" ")[1],
+          Password: row.password,
+          RoleName: row.roleName,
+          Username: row.username,
+          IsActive: 1
+        }
+
+        console.log(user);
+        this.props.users_insert(
+          this.props.user.token,
+          user
+        )
+      }
+
+      onAfterEditRow = (row) => {
+        console.log(row);
       }
 
       buildingField = (column, attr, editorClass, ignoreEditable) => {
@@ -94,13 +112,10 @@ class UsersAdmin extends React.Component{
       getData = () => {
         return this.props.users.map(
           (user) => {
+            console.log(user);
             return {...user, buildingName: `Nr ${user.building.id} : ${user.building.name} ${user.building.street} ${user.building.streetNo} ${user.building.postCode}`}
           }
         )
-      }
-
-      onAfterEditRow = (row) => {
-        console.log(row);
       }
 
       emailValidator = (value, row) => {

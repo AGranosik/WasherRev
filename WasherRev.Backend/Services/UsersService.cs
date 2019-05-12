@@ -53,7 +53,14 @@ namespace WasherRev.Backend.Services
 
         public async Task<UsersDTO> Insert(UsersDTO model)
         {
+            await InsertValidate(model);
             var pureModel = ConvertToPureModel(model);
+
+            var passwordAndSalt = GenerateSaltedPassword(model.Password);
+            pureModel.Password = passwordAndSalt.Item1;
+            pureModel.Salt = passwordAndSalt.Item2;
+            pureModel.RoleNo = model.RoleName.RoleNameToRoleNo();
+
             var insertedModel = await _repository.Insert(pureModel);
 
             return await ConvertToDto(insertedModel);
@@ -61,6 +68,7 @@ namespace WasherRev.Backend.Services
 
         public async Task<UsersDTO> Update(UsersDTO model)
         {
+            await UpdateValidete(model);
             var pureModel = ConvertToPureModel(model);
             var updatedModel = await _repository.Update(pureModel);
 
@@ -84,7 +92,6 @@ namespace WasherRev.Backend.Services
         protected Users ConvertToPureModel (UsersDTO dto)
         {
             var pureModel = _mapper.Map<UsersDTO, Users>(dto);
-            pureModel.BuildingId = dto.Building.Id;
 
             return pureModel;
         }
@@ -113,7 +120,7 @@ namespace WasherRev.Backend.Services
             if (user != null)
             {
                 // check password
-                if (GenerateSaltedPassword(password, user.Salt).Equals(user.Password))
+                if (GenerateSaltedPassword(password, user.Salt).Item1.Equals(user.Password))
                 {
                     UsersDTO dto = _mapper.Map<Users, UsersDTO>(user);
                     dto.RoleNo = (ERole)user.RoleNo;
@@ -141,7 +148,7 @@ namespace WasherRev.Backend.Services
             return null;
         }
 
-        private string GenerateSaltedPassword(string password, string dbSalt = null)
+        private Tuple<string, string> GenerateSaltedPassword(string password, string dbSalt = null)
         {
 
             byte[] salt;
@@ -153,7 +160,6 @@ namespace WasherRev.Backend.Services
             {
                 salt = Encoding.ASCII.GetBytes(dbSalt);
             }
-            Console.WriteLine();
             var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
             byte[] hash = pbkdf2.GetBytes(20);
 
@@ -161,9 +167,34 @@ namespace WasherRev.Backend.Services
             Array.Copy(salt, 0, hashBytes, 0, 16);
             Array.Copy(hash, 0, hashBytes, 16, 20);
 
-            return Convert.ToBase64String(hashBytes);
+            var pass = Convert.ToBase64String(hashBytes);
+            var stringSalt = Encoding.ASCII.GetString(salt, 0, salt.Length);
+
+            return new Tuple<string, string>(pass, stringSalt);
         }
 
+
+        #endregion
+
+        #region Validation
+
+        protected async Task InsertValidate(UsersDTO model)
+        {
+            var building = await _buildingRepository.GetById(model.BuildingId);
+            if (building == null)
+                throw new Exception($"Nie ma takiego budynku o numerze {model.BuildingId}");
+        }
+
+        protected async Task UpdateValidete(UsersDTO model)
+        {
+            var user = await _repository.GetById(model.Id);
+            if (user == null)
+                throw new Exception($"Nie ma użytkownika o id : {model.Id}");
+
+            var building = await _buildingRepository.GetById(model.BuildingId);
+            if (building == null)
+                throw new Exception($"Nie ma takiego budynku o numerze {model.BuildingId}");
+        }
 
         #endregion
     }

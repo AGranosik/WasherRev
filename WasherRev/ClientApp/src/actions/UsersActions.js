@@ -29,9 +29,9 @@ export const users_getFullInfo = (token) => async (dispatch) => {
 }
 
 export const users_insert = (token, model) => async (dispatch) => {
-    const response = await apiProvider(token).post(`api/Users/`, {
+    const response = await apiProvider(token).post(`api/Users/`,
         model
-    });
+    );
 
     dispatch({
         type: USERS_INSERT,

@@ -18,12 +18,8 @@ namespace WasherRev.Backend.Repository
 
         public async Task<Users> GetByUserNameAsync(string username)
         {
-            //using(var conn = new SqlConnection(connectionString))
-            //{
-            try
+            using (var conn = new SqlConnection(connectionString))
             {
-                var conn = new SqlConnection(connectionString);
-
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@Username", username);
 
@@ -33,12 +29,6 @@ namespace WasherRev.Backend.Repository
 
                 return result;
             }
-            catch(Exception ex)
-            {
-                return null;
-            }
-
-            //}
         }
     }
 }

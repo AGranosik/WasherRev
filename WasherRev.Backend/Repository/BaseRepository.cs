@@ -49,8 +49,11 @@ namespace WasherRev.Backend.Repository
 
         public async Task<TModel> Insert(TModel model)
         {
-            using (var conn = new SqlConnection(connectionString))
+            //using (var conn = new SqlConnection(connectionString))
+            //{
+            try
             {
+                var conn = new SqlConnection(connectionString);
                 DynamicParameters parameters = GetDynamicParameters(model);
                 var result = await conn.QuerySingleAsync<int>($"{typeof(TModel).Name}_Insert",
                     param: parameters,
@@ -58,6 +61,12 @@ namespace WasherRev.Backend.Repository
 
                 return await GetById(result);
             }
+            catch(Exception ex)
+            {
+
+            }
+            return default(TModel);
+            //}
         }
 
         public async Task Remove(int id)
@@ -93,11 +102,11 @@ namespace WasherRev.Backend.Repository
             {
                 if(property.Name.Equals("Id") && withId)
                 {
-                    parameters.Add($"@{property.Name}");
+                    parameters.Add($"@{property.Name}", property.GetValue(model, null));
                 }
-                else if(!property.Name.Equals("Id") && !withId)
+                else if(!property.Name.Equals("Id"))
                 {
-                    parameters.Add($"@{property.Name}");
+                    parameters.Add($"@{property.Name}", property.GetValue(model, null));
                 }
             }
 
