@@ -158,8 +158,9 @@ namespace WasherRev.Backend.Services
             }
             else
             {
-                salt = Encoding.ASCII.GetBytes(dbSalt);
+                salt = Convert.FromBase64String(dbSalt);
             }
+
             var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
             byte[] hash = pbkdf2.GetBytes(20);
 
@@ -168,7 +169,7 @@ namespace WasherRev.Backend.Services
             Array.Copy(hash, 0, hashBytes, 16, 20);
 
             var pass = Convert.ToBase64String(hashBytes);
-            var stringSalt = Encoding.ASCII.GetString(salt, 0, salt.Length);
+            var stringSalt = Convert.ToBase64String(salt);
 
             return new Tuple<string, string>(pass, stringSalt);
         }
