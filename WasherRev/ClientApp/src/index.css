@@ -19,3 +19,7 @@
 .form-group > .Dropdown-root{
     width: inherit;
 }
+
+input[placeholder="Hasło"] {
+    -webkit-text-security: disc;
+}
