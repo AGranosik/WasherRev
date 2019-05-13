@@ -28,9 +28,14 @@ class UsersAdmin extends React.Component{
 
       onAfterDeleteRow = (row) => {
         for(let i = 0; i < row.length; i++){
+          var user = this.props.users.find(
+            (user) => {
+              return user.username == row[i].toString()
+            }
+          );
           this.props.users_delete(
             this.props.user.token,
-              row[i]
+              user.id
           )
         }
 
@@ -55,7 +60,6 @@ class UsersAdmin extends React.Component{
       }
 
       onAfterEditRow = (row) => {
-        console.log(row);
         var user = {
           Id: row.id,
           Email: row.email,

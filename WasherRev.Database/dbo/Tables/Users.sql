@@ -8,7 +8,7 @@
     [IsActive] BIT           DEFAULT ((1)) NOT NULL,
     [Salt]     VARCHAR (MAX) NOT NULL,
     CONSTRAINT [PK_UsersId] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_Users_Room] FOREIGN KEY ([BuildingId]) REFERENCES [dbo].[Room] ([Id]),
+    CONSTRAINT [FK_Users_BuildingId] FOREIGN KEY ([BuildingId]) REFERENCES [dbo].[Building] ([Id]),
     UNIQUE NONCLUSTERED ([Username] ASC)
 );
 

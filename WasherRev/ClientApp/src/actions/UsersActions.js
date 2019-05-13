@@ -14,8 +14,9 @@ export const users_delete = (token, id) => async (dispatch) => {
     const response = await apiProvider(token).delete(`api/Users/${id}`);
 
     dispatch(
-        {type: USERS_DELETE,
-        payload: response.data}
+    {   type: USERS_DELETE,
+        payload: id
+    }
     );
 }
 

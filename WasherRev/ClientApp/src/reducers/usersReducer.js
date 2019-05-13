@@ -29,8 +29,13 @@ export const usersReducer = (state, action) => {
                    ...state.slice(index + 1)
                 ]
             }
-        case USERS_DELETE:
-            return _.omit(state, action.payload);
+        case USERS_DELETE:{
+            const index = state.findIndex(user => user.id === action.payload);
+            return [
+                ...state.slice(0, index),
+                ...state.slice(index+1)
+            ]
+        }
         default:
             return state;
     }

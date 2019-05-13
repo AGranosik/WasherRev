@@ -49,11 +49,8 @@ namespace WasherRev.Backend.Repository
 
         public async Task<TModel> Insert(TModel model)
         {
-            //using (var conn = new SqlConnection(connectionString))
-            //{
-            try
+            using (var conn = new SqlConnection(connectionString))
             {
-                var conn = new SqlConnection(connectionString);
                 DynamicParameters parameters = GetDynamicParameters(model);
                 var result = await conn.QuerySingleAsync<int>($"{typeof(TModel).Name}_Insert",
                     param: parameters,
@@ -61,13 +58,7 @@ namespace WasherRev.Backend.Repository
 
                 return await GetById(result);
             }
-            catch(Exception ex)
-            {
-
-            }
-            return default(TModel);
-            //}
-        }
+    }
 
         public async Task Remove(int id)
         {
@@ -75,7 +66,7 @@ namespace WasherRev.Backend.Repository
             {
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@Id", id);
-                var result = await conn.QuerySingleAsync<TModel>($"{typeof(TModel).Name}_Remove",
+                var result = await conn.QueryAsync($"{typeof(TModel).Name}_Remove",
                     param: parameters,
                     commandType: System.Data.CommandType.StoredProcedure);
             }
@@ -83,15 +74,24 @@ namespace WasherRev.Backend.Repository
 
         public async Task<TModel> Update(TModel model)
         {
-            using (var conn = new SqlConnection(connectionString))
-            {
-                DynamicParameters parameters = GetDynamicParameters(model, true);
-                var result = await conn.QueryAsync($"{typeof(TModel).Name}_Update",
-                    param: parameters,
-                    commandType: System.Data.CommandType.StoredProcedure);
+            //using (var conn = new SqlConnection(connectionString))
+            //{
+                try
+                {
+                    var conn = new SqlConnection(connectionString);
+                    DynamicParameters parameters = GetDynamicParameters(model, true);
+                    var result = await conn.QueryAsync($"{typeof(TModel).Name}_Update",
+                        param: parameters,
+                        commandType: System.Data.CommandType.StoredProcedure);
 
-                return await GetById(parameters.Get<int>("Id"));
+                    return await GetById(parameters.Get<int>("Id"));
+                }
+                catch(Exception ex)
+            {
+
             }
+            return default(TModel);
+            //}
         }
 
         protected DynamicParameters GetDynamicParameters(TModel model, bool withId = false)
