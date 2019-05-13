@@ -5,7 +5,8 @@ import
 {
   users_getFullInfo,
   users_delete,
-  users_insert
+  users_insert,
+  users_update
 } from '../actions/UsersActions';
 import apiProvider from '../api/apiProvider';
 import CustomDropDownListModalBody from '../components/common/CustomDropDownListModalBody'
@@ -15,12 +16,14 @@ import CustomDropDownListModalBody from '../components/common/CustomDropDownList
 class UsersAdmin extends React.Component{
 
   state = {
-    buildings: []
+    buildings: [],
+    roles: []
   }
 
     componentDidMount(){
       this.props.users_getFullInfo(this.props.user.token);
       this.getBuildings();
+      this.getRoles();
     }
 
       onAfterDeleteRow = (row) => {
@@ -53,6 +56,22 @@ class UsersAdmin extends React.Component{
 
       onAfterEditRow = (row) => {
         console.log(row);
+        var user = {
+          Id: row.id,
+          Email: row.email,
+          BuildingId: row.buildingName.split(" ")[1],
+          Password: row.password,
+          RoleName: row.roleName,
+          Username: row.username,
+          IsActive: 1
+        }
+
+        this.props.users_update(
+          this.props.user.token,
+          user
+        );
+
+        return user;
       }
 
       buildingField = (column, attr, editorClass, ignoreEditable) => {
@@ -99,10 +118,26 @@ class UsersAdmin extends React.Component{
         });
       }
 
+      getRoles = async () => {
+        var response = await apiProvider(this.props.user.token).get('/api/Role');
+        var roles = response.data;
+        this.setState({
+          roles: roles
+        });
+      }
+
       getBuildingsValues = () => {
         return this.state.buildings.map(
           (building) => {
-            return `${building.id} (${building.name} ${building.street} ${building.streetNo} ${building.postCode})`;
+            return `Nr ${building.id} : (${building.name} ${building.street} ${building.streetNo} ${building.postCode})`;
+          }
+        );
+      }
+
+      getRolesValues = () => {
+        return this.state.roles.map(
+          (role) => {
+            return `${role.name}`;
           }
         );
       }
@@ -155,7 +190,7 @@ class UsersAdmin extends React.Component{
             options={options}>
             <TableHeaderColumn isKey dataField='username'>Nazwa użytkownika</TableHeaderColumn>
             <TableHeaderColumn dataField='buildingName' editable={ { type: 'select', options: { values: this.getBuildingsValues() } } } customInsertEditor={ { getElement: this.buildingField } }>Budynek</TableHeaderColumn>
-            <TableHeaderColumn dataField='roleName' customInsertEditor={ { getElement: this.roleField } }>Rola</TableHeaderColumn>
+            <TableHeaderColumn dataField='roleName' editable={ { type: 'select', options: { values: this.getRolesValues() } } } customInsertEditor={ { getElement: this.roleField } }>Rola</TableHeaderColumn>
             <TableHeaderColumn dataField='email' editable={ { validator: this.emailValidator } }>Email</TableHeaderColumn>
             <TableHeaderColumn hidden dataField='password'>Hasło</TableHeaderColumn>
         </BootstrapTable>
@@ -170,4 +205,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { users_getFullInfo, users_delete, users_insert })(UsersAdmin);
+export default connect(mapStateToProps, { users_getFullInfo, users_delete, users_insert, users_update })(UsersAdmin);

@@ -59,7 +59,6 @@ namespace WasherRev.Backend.Services
             var passwordAndSalt = GenerateSaltedPassword(model.Password);
             pureModel.Password = passwordAndSalt.Item1;
             pureModel.Salt = passwordAndSalt.Item2;
-            pureModel.RoleNo = model.RoleName.RoleNameToRoleNo();
 
             var insertedModel = await _repository.Insert(pureModel);
 
@@ -92,7 +91,7 @@ namespace WasherRev.Backend.Services
         protected Users ConvertToPureModel (UsersDTO dto)
         {
             var pureModel = _mapper.Map<UsersDTO, Users>(dto);
-
+            pureModel.RoleNo = dto.RoleName.RoleNameToRoleNo();
             return pureModel;
         }
 

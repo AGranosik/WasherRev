@@ -86,11 +86,11 @@ namespace WasherRev.Backend.Repository
             using (var conn = new SqlConnection(connectionString))
             {
                 DynamicParameters parameters = GetDynamicParameters(model, true);
-                var result = await conn.QuerySingleAsync<int>($"{typeof(TModel).Name}_Update",
+                var result = await conn.QueryAsync($"{typeof(TModel).Name}_Update",
                     param: parameters,
                     commandType: System.Data.CommandType.StoredProcedure);
 
-                return await GetById(result);
+                return await GetById(parameters.Get<int>("Id"));
             }
         }
 

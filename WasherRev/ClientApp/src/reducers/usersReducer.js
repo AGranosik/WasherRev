@@ -12,7 +12,6 @@ const initialState = [];
 export const usersReducer = (state, action) => {
     state = state || initialState;
 
-
     switch (action.type) {
         case USERS_GETALL:
             return action.payload;
@@ -21,7 +20,15 @@ export const usersReducer = (state, action) => {
         case USERS_INSERT:
             return [...state, action.payload];
         case USERS_UPDATE:
-            return {...state, [action.payload.id] : action.payload };
+            {
+                const index = state.findIndex(user => user.id === action.payload.id)
+
+                return [
+                   ...state.slice(0, index),
+                      action.payload,
+                   ...state.slice(index + 1)
+                ]
+            }
         case USERS_DELETE:
             return _.omit(state, action.payload);
         default:
