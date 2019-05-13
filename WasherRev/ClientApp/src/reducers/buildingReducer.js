@@ -6,7 +6,6 @@ const initialState = [];
 
 export const buildingReducer = (state, action) => {
     state = state || initialState;
-
     switch (action.type) {
         case BUILDING_GETALL:
             return action.payload;

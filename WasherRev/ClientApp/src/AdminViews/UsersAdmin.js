@@ -21,12 +21,10 @@ class UsersAdmin extends React.Component{
     componentDidMount(){
       this.props.users_getFullInfo(this.props.user.token);
       this.getBuildings();
-      console.log(this.props);
     }
 
       onAfterDeleteRow = (row) => {
         for(let i = 0; i < row.length; i++){
-          console.log(row[i]);
           this.props.users_delete(
             this.props.user.token,
               row[i]
@@ -36,7 +34,6 @@ class UsersAdmin extends React.Component{
       }
 
       onAfterInsertRow = (row) => {
-        console.log(row);
         var user = {
           Email: row.email,
           BuildingId: row.buildingName.split(" ")[1],
@@ -46,11 +43,12 @@ class UsersAdmin extends React.Component{
           IsActive: 1
         }
 
-        console.log(user);
         this.props.users_insert(
           this.props.user.token,
           user
-        )
+        );
+
+        return user;
       }
 
       onAfterEditRow = (row) => {
@@ -112,7 +110,6 @@ class UsersAdmin extends React.Component{
       getData = () => {
         return this.props.users.map(
           (user) => {
-            console.log(user);
             return {...user, buildingName: `Nr ${user.building.id} : ${user.building.name} ${user.building.street} ${user.building.streetNo} ${user.building.postCode}`}
           }
         )
