@@ -10,10 +10,16 @@ import
 } from '../actions/UsersActions';
 import apiProvider from '../api/apiProvider';
 import CustomDropDownListModalBody from '../components/common/CustomDropDownListModalBody'
-  import 'react-dropdown/style.css'
-
+import 'react-dropdown/style.css'
+import { emailValidator } from '../components/common/Validatadtors';
+import { user_extract } from '../components/common/ModelExtractionFromForm';
+import { buildingOption, roleOption } from '../components/common/EditDropDowns';
 
 class UsersAdmin extends React.Component{
+
+    buildingFullInfo = (building) => {
+      return `Nr ${building.id} : (${building.name} ${building.street} ${building.streetNo} ${building.postCode})`;
+    }
 
   state = {
     buildings: [],
@@ -42,40 +48,17 @@ class UsersAdmin extends React.Component{
       }
 
       onAfterInsertRow = (row) => {
-        var user = {
-          Email: row.email,
-          BuildingId: row.buildingName.split(" ")[1],
-          Password: row.password,
-          RoleName: row.roleName,
-          Username: row.username,
-          IsActive: 1
-        }
-
         this.props.users_insert(
           this.props.user.token,
-          user
+          user_extract(row)
         );
-
-        return user;
       }
 
       onAfterEditRow = (row) => {
-        var user = {
-          Id: row.id,
-          Email: row.email,
-          BuildingId: row.buildingName.split(" ")[1],
-          Password: row.password,
-          RoleName: row.roleName,
-          Username: row.username,
-          IsActive: 1
-        }
-
         this.props.users_update(
           this.props.user.token,
-          user
+          user_extract(row, true)
         );
-
-        return user;
       }
 
       buildingField = (column, attr, editorClass, ignoreEditable) => {
@@ -84,7 +67,7 @@ class UsersAdmin extends React.Component{
             url='/api/Building'
             token={ this.props.user.token }
             ref={ attr.ref }
-            dropdownOption={this.buildingOption}
+            dropdownOption={buildingOption}
             placeholder="Wybierz budenek przypisany do użytkownika" />
         );
       }
@@ -95,23 +78,9 @@ class UsersAdmin extends React.Component{
             url='api/Role'
             token={ this.props.user.toke }
             ref={ attr.ref }
-            dropdownOption={ this.roleOption }
+            dropdownOption={ roleOption }
             placeholder="Wybierz rolę"/>
         )
-      }
-
-      roleOption = (role) => {
-        return {
-          value: role.id,
-          label: role.name
-        }
-      }
-
-      buildingOption = (building) => {
-        return {
-          value: building.id,
-          label: `Nr ${building.id} : ${building.name} ${building.street} ${building.streetNo} ${building.postCode}`
-        }
       }
 
       getBuildings = async () => {
@@ -133,7 +102,7 @@ class UsersAdmin extends React.Component{
       getBuildingsValues = () => {
         return this.state.buildings.map(
           (building) => {
-            return `Nr ${building.id} : (${building.name} ${building.street} ${building.streetNo} ${building.postCode})`;
+            return this.buildingFullInfo(building);
           }
         );
       }
@@ -149,17 +118,9 @@ class UsersAdmin extends React.Component{
       getData = () => {
         return this.props.users.map(
           (user) => {
-            return {...user, buildingName: `Nr ${user.building.id} : ${user.building.name} ${user.building.street} ${user.building.streetNo} ${user.building.postCode}`}
+            return {...user, buildingName: this.buildingFullInfo(user.building)}
           }
         )
-      }
-
-      emailValidator = (value, row) => {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(!re.test(String(value).toLowerCase()))
-          return 'Podano niepoprawny email!';
-
-        return true;
       }
 
     render(){
@@ -195,7 +156,7 @@ class UsersAdmin extends React.Component{
             <TableHeaderColumn isKey dataField='username'>Nazwa użytkownika</TableHeaderColumn>
             <TableHeaderColumn dataField='buildingName' editable={ { type: 'select', options: { values: this.getBuildingsValues() } } } customInsertEditor={ { getElement: this.buildingField } }>Budynek</TableHeaderColumn>
             <TableHeaderColumn dataField='roleName' editable={ { type: 'select', options: { values: this.getRolesValues() } } } customInsertEditor={ { getElement: this.roleField } }>Rola</TableHeaderColumn>
-            <TableHeaderColumn dataField='email' editable={ { validator: this.emailValidator } }>Email</TableHeaderColumn>
+            <TableHeaderColumn dataField='email' editable={ { validator: emailValidator } }>Email</TableHeaderColumn>
             <TableHeaderColumn hidden dataField='password'>Hasło</TableHeaderColumn>
         </BootstrapTable>
         );
