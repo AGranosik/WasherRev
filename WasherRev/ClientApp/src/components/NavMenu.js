@@ -11,11 +11,23 @@ class NavMenu extends React.Component{
   adminPanel = () =>{
       if(this.props.isAdmin){
           return (
-            <LinkContainer to={'/users'} exact>
-            <NavItem>
-              <Glyphicon glyph='user' /> Uzytkownicy
-            </NavItem>
-          </LinkContainer>
+            <Nav>
+              <LinkContainer to={'/'} exact>
+                <NavItem>
+                  <Glyphicon glyph='home' /> Home
+                </NavItem>
+              </LinkContainer>
+              <LinkContainer to={'/users'} exact>
+                <NavItem>
+                  <Glyphicon glyph='user' /> Uzytkownicy
+                </NavItem>
+              </LinkContainer>
+              <LinkContainer to={'/buildings'} exact>
+                <NavItem>
+                  <Glyphicon glyph='building' /> Zarządzanie budynkami
+                </NavItem>
+              </LinkContainer>
+            </Nav>
           );
       }
       else{
@@ -33,14 +45,7 @@ class NavMenu extends React.Component{
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
-        <Nav>
-          <LinkContainer to={'/'} exact>
-            <NavItem>
-              <Glyphicon glyph='home' /> Home
-            </NavItem>
-          </LinkContainer>
           {this.adminPanel()}
-        </Nav>
       </Navbar.Collapse>
     </Navbar>
     );
