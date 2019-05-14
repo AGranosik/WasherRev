@@ -10,3 +10,6 @@ export const USERS_UPDATE = 'USERS_UPDATE';
 
 // Buildings
 export const BUILDING_GETALL = 'BUILDING_GETALL';
+export const BUILDING_INSERT = 'BUILDING_INSERT';
+export const BUILDING_UPDATE = 'BUILDING_UPDATE';
+export const BUILDING_DELETE = 'BUILDING_DELETE';

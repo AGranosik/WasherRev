@@ -11,7 +11,7 @@ import
 import apiProvider from '../api/apiProvider';
 import CustomDropDownListModalBody from '../components/common/CustomDropDownListModalBody'
 import 'react-dropdown/style.css'
-import { emailValidator } from '../components/common/Validatadtors';
+import { emailValidator } from '../components/common/Validators';
 import { user_extract } from '../components/common/ModelExtractionFromForm';
 import { buildingOption, roleOption } from '../components/common/EditDropDowns';
 
