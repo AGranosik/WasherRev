@@ -6,6 +6,7 @@ import Users from './components/Users';
 import Layout from './components/Layout';
 import { Route } from "react-router-dom";
 import Building from './components/Building';
+import Reservation from './components/Reservation';
 import Producer from './components/Producer';
 
 class App extends React.Component{
@@ -20,6 +21,7 @@ class App extends React.Component{
                         <Route exact path='/users' component={Users} />
                         <Route exact path='/building' component={Building} />
                         <Route exact path='/producer' component={Producer} />
+                        <Route exact path='/reservation' component={Reservation} />
                     </Layout>
                 );
             }

@@ -32,6 +32,11 @@ class NavMenu extends React.Component{
                   <Glyphicon glyph='building' /> Zarządzanie producentami pralek
                 </NavItem>
               </LinkContainer>
+              <LinkContainer to={'/reservation'} exact>
+                <NavItem>
+                  <Glyphicon glyph='building' /> Zarządzanie rezerwacjami użytkowników
+                </NavItem>
+              </LinkContainer>
             </Nav>
           );
       }
