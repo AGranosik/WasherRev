@@ -2,7 +2,8 @@ import React from 'react';
 import BuildingAdmin from '../AdminViews/BuildingAdmin';
 import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css';
 import '../../node_modules/react-bootstrap-table/dist/react-bootstrap-table.min.css';
-class Buildings extends React.Component{
+
+class Building extends React.Component{
     render() {
         return(
             <BuildingAdmin />
@@ -10,4 +11,4 @@ class Buildings extends React.Component{
     }
 }
 
-export default Buildings;
+export default Building;

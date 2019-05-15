@@ -5,7 +5,8 @@ import Home from './components/Home';
 import Users from './components/Users';
 import Layout from './components/Layout';
 import { Route } from "react-router-dom";
-import Buildings from './components/Buildings';
+import Building from './components/Building';
+import Producer from './components/Producer';
 
 class App extends React.Component{
 
@@ -17,7 +18,8 @@ class App extends React.Component{
                     <Layout>
                         <Route exact path='/' component={Home} />
                         <Route exact path='/users' component={Users} />
-                        <Route exact path='/buildings' component={Buildings} />
+                        <Route exact path='/building' component={Building} />
+                        <Route exact path='/producer' component={Producer} />
                     </Layout>
                 );
             }
@@ -45,12 +47,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(App);
-
-// export default () => (
-//   <Layout>
-//     <Route exact path='/' component={Home} />
-//     <Route path='/counter' component={Counter} />
-//     <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
-//     <Route path='/login' component={Login} />
-//   </Layout>
-// );

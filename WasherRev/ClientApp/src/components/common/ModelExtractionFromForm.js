@@ -27,3 +27,15 @@ export const building_extract = (form, withId = false) => {
 
   return building;
 }
+
+export const producer_extract = (form, withId = false) => {
+  var producer = {
+    Name: form.name,
+    ServicePhoneNo: form.servicePhoneNo
+  }
+
+  if(withId)
+    return {'Id': form.id, ...producer};
+
+  return producer;
+}

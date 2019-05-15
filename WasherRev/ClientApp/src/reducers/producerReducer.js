@@ -1,22 +1,22 @@
 import {
-    BUILDING_GETALL,
-    BUILDING_DELETE,
-    BUILDING_INSERT,
-    BUILDING_UPDATE
-} from "../actions/types";
+    PRODUCER_DELETE,
+    PRODUCER_GETALL,
+    PRODUCER_INSERT,
+    PRODUCER_UPDATE
+} from '../actions/types';
 
 const initialState = [];
 
-export const buildingReducer = (state, action) => {
+export const producerReducer = (state, action) => {
     state = state || initialState;
     switch (action.type) {
-        case BUILDING_GETALL:
+        case PRODUCER_GETALL:
             return action.payload;
-        case BUILDING_INSERT:
+        case PRODUCER_INSERT:
             return [...state, action.payload];
-        case BUILDING_UPDATE:
+        case PRODUCER_UPDATE:
             {
-                const index = state.findIndex(building => building.id === action.payload.id)
+                const index = state.findIndex(producer => producer.id === action.payload.id)
 
                 return [
                    ...state.slice(0, index),
@@ -24,9 +24,9 @@ export const buildingReducer = (state, action) => {
                    ...state.slice(index + 1)
                 ]
             }
-        case BUILDING_DELETE:
+        case PRODUCER_DELETE:
         {
-            const index = state.findIndex(building => building.id === action.payload);
+            const index = state.findIndex(producer => producer.id === action.payload);
             return [
                 ...state.slice(0, index),
                 ...state.slice(index+1)

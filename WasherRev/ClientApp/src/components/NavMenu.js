@@ -22,9 +22,14 @@ class NavMenu extends React.Component{
                   <Glyphicon glyph='user' /> Uzytkownicy
                 </NavItem>
               </LinkContainer>
-              <LinkContainer to={'/buildings'} exact>
+              <LinkContainer to={'/building'} exact>
                 <NavItem>
                   <Glyphicon glyph='building' /> Zarządzanie budynkami
+                </NavItem>
+              </LinkContainer>
+              <LinkContainer to={'/producer'} exact>
+                <NavItem>
+                  <Glyphicon glyph='building' /> Zarządzanie producentami pralek
                 </NavItem>
               </LinkContainer>
             </Nav>

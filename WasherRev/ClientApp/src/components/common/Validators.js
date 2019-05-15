@@ -29,3 +29,11 @@ export const emailValidator = (value) => {
 
     return true;
   }
+
+  export const phoneNumberValidator = (value) => {
+    var reg = /^[0-9\+]{8,13}$/;
+    if(!reg.test(value)) 
+        return 'NIeprawidłowy numer telefonu!';
+    else
+        return true;
+  }

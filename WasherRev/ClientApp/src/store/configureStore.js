@@ -4,6 +4,7 @@ import { routerReducer, routerMiddleware } from 'react-router-redux';
 import * as User from './User';
 import { usersReducer } from '../reducers/usersReducer';
 import { buildingReducer } from '../reducers/buildingReducer';
+import { producerReducer } from '../reducers/producerReducer';
 
 
 
@@ -25,7 +26,8 @@ export default function configureStore(history, initialState) {
     routing: routerReducer,
     user: User.reducer,
     users: usersReducer,
-    buildings: buildingReducer
+    buildings: buildingReducer,
+    producers: producerReducer
   });
 
   return createStore(
