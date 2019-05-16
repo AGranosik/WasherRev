@@ -118,7 +118,9 @@ class UsersAdmin extends React.Component{
       getData = () => {
         return this.props.users.map(
           (user) => {
-            return {...user, buildingName: this.buildingFullInfo(user.building)}
+            return {
+              ...user,
+              buildingName: this.buildingFullInfo(user.building)}
           }
         )
       }

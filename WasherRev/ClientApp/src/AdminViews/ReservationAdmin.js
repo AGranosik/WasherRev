@@ -74,10 +74,26 @@ class ReservationAdmin extends React.Component {
             <TableHeaderColumn dataField='username' >Użytkownik</TableHeaderColumn>
             <TableHeaderColumn dataField='startTime' >Rozpoczęcie</TableHeaderColumn>
             <TableHeaderColumn dataField='endTime' >Zakończenie</TableHeaderColumn>
-            <TableHeaderColumn dataField='washerName' >Pralka</TableHeaderColumn>
+            <TableHeaderColumn dataField='washerName' dataFormat={ activeFormatter }>Pralka</TableHeaderColumn>
         </BootstrapTable>
         );
     }
+}
+
+class ActiveFormatter extends React.Component {
+  render() {
+    return (
+      <input type='checkbox' checked={ this.props.active }/>
+    );
+  }
+}
+
+function activeFormatter(cell, row) {
+  console.log(cell);
+  console.log(row);
+  return (
+    <ActiveFormatter active={ cell } />
+  );
 }
 
 const mapStateToProps = (state) => {
