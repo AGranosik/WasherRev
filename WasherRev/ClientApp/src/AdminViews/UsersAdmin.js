@@ -133,6 +133,8 @@ class UsersAdmin extends React.Component{
           const options = {
             afterInsertRow: this.onAfterInsertRow,
             afterDeleteRow: this.onAfterDeleteRow,
+            insertText: 'Dodaj użytkownika',
+            deleteText: 'Usuń użytkownika'
           };
 
         return (

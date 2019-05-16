@@ -52,6 +52,8 @@ class BuildingAdmin extends React.Component{
           const options = {
             afterInsertRow: this.onAfterInsertRow,
             afterDeleteRow: this.onAfterDeleteRow,
+            insertText: 'Dodaj budynek',
+            deleteText: 'Usuń budynek'
           };
 
         return (

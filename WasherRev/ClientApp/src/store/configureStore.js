@@ -5,6 +5,7 @@ import * as User from './User';
 import { usersReducer } from '../reducers/usersReducer';
 import { buildingReducer } from '../reducers/buildingReducer';
 import { producerReducer } from '../reducers/producerReducer';
+import { reservationReducer } from '../reducers/reservationReducer';
 
 
 
@@ -27,7 +28,8 @@ export default function configureStore(history, initialState) {
     user: User.reducer,
     users: usersReducer,
     buildings: buildingReducer,
-    producers: producerReducer
+    producers: producerReducer,
+    reservations: reservationReducer
   });
 
   return createStore(

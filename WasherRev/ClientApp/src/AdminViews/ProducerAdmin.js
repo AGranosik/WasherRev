@@ -34,13 +34,6 @@ class ProducerAdmin extends React.Component{
         }
     }
 
-    onAfterEditRow = (row) => {
-        this.props.producer_update(
-            this.props.user.token,
-            producer_extract(row, true)
-        );
-    }
-
     render(){
         var selectRowProp = {
             mode: "checkbox",
@@ -51,6 +44,8 @@ class ProducerAdmin extends React.Component{
           const options = {
             afterInsertRow: this.onAfterInsertRow,
             afterDeleteRow: this.onAfterDeleteRow,
+            deleteText: "Usuń dane producenta",
+            insertText: 'Dodaj dane producenta'
           };
 
         return (
@@ -63,13 +58,6 @@ class ProducerAdmin extends React.Component{
             deleteRow
             insertRow
             search
-            cellEdit = {
-                {
-                   mode: 'dbclick',
-                   blurToSave: true,
-                   afterSaveCell: this.onAfterEditRow
-                }
-              }
             options={options}>
             <TableHeaderColumn isKey dataField='name'>Nazwa budynku </TableHeaderColumn>
             <TableHeaderColumn editable={ { validator: phoneNumberValidator } }  dataField='servicePhoneNo' >Numer telefonu</TableHeaderColumn>

@@ -3,6 +3,7 @@
 )
 AS
 BEGIN
-	DELETE FROM [dbo].[Reservation]
+	UPDATE [dbo].[Reservation]
+	Set UsersId = null
 	WHERE Id = @Id
 END
