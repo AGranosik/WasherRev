@@ -11,5 +11,6 @@ namespace WasherRev.Backend.Services.Interfaces
     {
         Task<List<ReservationDTO>> GetReservationsForUser(DateTime date, int buildingId);
         Task<List<ReservationDTO>> GetUsersReervations(DateTime? date, int usersId);
+        Task<ReservationDTO> MakeReservation(int reservationId, int userId);
     }
 }

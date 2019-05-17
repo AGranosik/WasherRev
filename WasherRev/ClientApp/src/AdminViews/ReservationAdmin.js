@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
+import { Button } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { reservation_delete, reservation_getall, reservation_update } from '../actions/ReservationActions';
 
@@ -30,13 +31,23 @@ class ReservationAdmin extends React.Component {
     getData(){
         return this.props.reservations.map(
             (reservation) => {
-                return {
+              if(reservation.users){
+                  return {
                     ...reservation,
                     endTime: reservation.endTime.replace('T', ' '),
                     startTime: reservation.startTime.replace('T', ' '),
                     username: reservation.users.username,
                     washerName: reservation.washer.name
-                }
+                  }
+              }
+
+              return {
+                ...reservation,
+                endTime: reservation.endTime.replace('T', ' '),
+                startTime: reservation.startTime.replace('T', ' '),
+                username: 'brak',
+                washerName: reservation.washer.name
+              }
             }
         )
     }
@@ -74,7 +85,9 @@ class ReservationAdmin extends React.Component {
             <TableHeaderColumn dataField='username' >Użytkownik</TableHeaderColumn>
             <TableHeaderColumn dataField='startTime' >Rozpoczęcie</TableHeaderColumn>
             <TableHeaderColumn dataField='endTime' >Zakończenie</TableHeaderColumn>
-            <TableHeaderColumn dataField='washerName' dataFormat={ activeFormatter }>Pralka</TableHeaderColumn>
+            <TableHeaderColumn dataField='washerName' >Pralka</TableHeaderColumn>
+            <TableHeaderColumn dataField='washerName' dataFormat={ activeFormatter }></TableHeaderColumn>
+
         </BootstrapTable>
         );
     }
@@ -83,7 +96,7 @@ class ReservationAdmin extends React.Component {
 class ActiveFormatter extends React.Component {
   render() {
     return (
-      <input type='checkbox' checked={ this.props.active }/>
+      <Button variant="primary" lg="sm">Zarezerwuj</Button>
     );
   }
 }

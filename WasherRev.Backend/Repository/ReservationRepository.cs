@@ -47,5 +47,21 @@ namespace WasherRev.Backend.Repository
                 return result.AsList();
             }
         }
+
+        public async Task<Reservation> MakeReservation(int reservationId, int userId)
+        {
+            using (var conn = new SqlConnection(connectionString))
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@ReservationId", reservationId);
+                parameters.Add("@UsersId", userId);
+
+                var result = await conn.QuerySingleAsync<Reservation>("Reservation_Reserve",
+                    param: parameters,
+                commandType: System.Data.CommandType.StoredProcedure);
+
+                return result;
+            }
+        }
     }
 }

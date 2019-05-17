@@ -68,5 +68,12 @@ namespace WasherRev.Api.Controllers
         {
             return await RunGetActionListAsync(() => _service.GetUsersReervations(date, usersId));
         }
+
+        [AuthorizeRoles(ERole.Admin, ERole.User)]
+        [HttpPut("{reservationId}/User/{usersId}")]
+        public async Task<IActionResult> MakeReservationByUser(int reservationId, int userId)
+        {
+            return await RunGetActionAsync(() => _service.MakeReservation(reservationId, userId));
+        }
     }
 }
