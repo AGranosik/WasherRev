@@ -70,7 +70,7 @@ namespace WasherRev.Api.Controllers
         }
 
         [AuthorizeRoles(ERole.Admin, ERole.User)]
-        [HttpPut("{reservationId}/User/{usersId}")]
+        [HttpPut("{reservationId}/User/{userId}")]
         public async Task<IActionResult> MakeReservationByUser(int reservationId, int userId)
         {
             return await RunGetActionAsync(() => _service.MakeReservation(reservationId, userId));

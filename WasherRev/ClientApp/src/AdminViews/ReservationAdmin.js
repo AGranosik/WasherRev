@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { Button } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { reservation_delete, reservation_getall, reservation_update } from '../actions/ReservationActions';
+import { reservation_delete, reservation_getall, reservation_update, reservation_reserve } from '../actions/ReservationActions';
 
 class ReservationAdmin extends React.Component {
 
@@ -52,6 +52,23 @@ class ReservationAdmin extends React.Component {
         )
     }
 
+    buttonFromat(cell, row){
+      console.log(this.props);
+      return (
+        <Button 
+          variant="primary"
+          lg="sm"
+          onClick={() =>{
+            this.props.reservation_reserve(
+              this.props.user.token,
+              row.id,
+              this.props.user.userId
+            )
+          }
+          }>Zarezerwuj</Button>
+      );
+    }
+
     render(){
         var selectRowProp = {
             mode: "checkbox",
@@ -86,34 +103,22 @@ class ReservationAdmin extends React.Component {
             <TableHeaderColumn dataField='startTime' >Rozpoczęcie</TableHeaderColumn>
             <TableHeaderColumn dataField='endTime' >Zakończenie</TableHeaderColumn>
             <TableHeaderColumn dataField='washerName' >Pralka</TableHeaderColumn>
-            <TableHeaderColumn dataField='washerName' dataFormat={ activeFormatter }></TableHeaderColumn>
-
+            <TableHeaderColumn dataFormat={ (cell, row) => this.buttonFromat(cell, row) }></TableHeaderColumn>
         </BootstrapTable>
         );
     }
 }
 
-class ActiveFormatter extends React.Component {
-  render() {
-    return (
-      <Button variant="primary" lg="sm">Zarezerwuj</Button>
-    );
-  }
-}
 
-function activeFormatter(cell, row) {
-  console.log(cell);
-  console.log(row);
-  return (
-    <ActiveFormatter active={ cell } />
-  );
-}
+
+
 
 const mapStateToProps = (state) => {
+  console.log(state);
     return{
         user: state.user,
         reservations: state.reservations
     }
 }
 
-export default connect(mapStateToProps, { reservation_delete, reservation_getall, reservation_update })(ReservationAdmin);
+export default connect(mapStateToProps, { reservation_delete, reservation_getall, reservation_update, reservation_reserve })(ReservationAdmin);
