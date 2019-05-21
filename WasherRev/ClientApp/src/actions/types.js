@@ -31,3 +31,9 @@ export const WASHER_GETALL = 'WASHER_GETALL';
 export const WASHER_UPDATE = 'WAHSER_UPDATE';
 export const WASHER_DELETE = 'WASHER_DELETE';
 export const WASHER_INSERT = 'WASHER_INSERT';
+
+//Room
+export const ROOM_GETALL = 'ROOM_GETALL';
+export const ROOM_UPDATE = 'ROOM_UPDATE';
+export const ROOM_DELETE = 'ROOM_DELETE';
+export const ROOM_INSERT = 'ROOM_INSERT';

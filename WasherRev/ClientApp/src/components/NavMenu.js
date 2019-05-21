@@ -37,6 +37,11 @@ class NavMenu extends React.Component{
                   Zarządzanie pralkami
                 </NavItem>
               </LinkContainer>
+              <LinkContainer to={'/room'} exact>
+                <NavItem>
+                  Zarządzanie pokojami
+                </NavItem>
+              </LinkContainer>
             </Nav>
           );
       }
