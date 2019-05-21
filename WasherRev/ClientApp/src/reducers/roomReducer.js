@@ -8,7 +8,6 @@ ROOM_UPDATE
 const initialState = [];
 
 export const roomReducer = (state, action) => {
-    console.log(action);
     state = state || initialState;
     switch (action.type) {
         case ROOM_GETALL:

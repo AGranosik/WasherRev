@@ -26,17 +26,18 @@ class RoomAdmin extends React.Component{
     }
 
     onAfterDeleteRow = (row) => {
-        // for(let i = 0; i < row.length; i++){
-        //   var producer = this.props.producers.find(
-        //     (producer) => {
-        //       return producer.name === row[i]
-        //     }
-        //   );
-        //   this.props.producer_delete(
-        //     this.props.user.token,
-        //     producer.id
-        //   )
-        // }
+        console.log(row);
+        for(let i = 0; i < row.length; i++){
+          var room = this.props.rooms.find(
+            (room) => {
+              return room.id === row[i]
+            }
+          );
+          this.props.room_delete(
+            this.props.user.token,
+            room.id
+          )
+        }
     }
 
     getData = () => {
@@ -70,7 +71,7 @@ class RoomAdmin extends React.Component{
 
           const options = {
             afterInsertRow: this.onAfterInsertRow,
-            // afterDeleteRow: this.onAfterDeleteRow,
+            afterDeleteRow: this.onAfterDeleteRow,
             deleteText: "Usuń pokój",
             insertText: 'Dodaj pokój'
           };
