@@ -48,7 +48,7 @@ namespace WasherRev.Backend.Services
         {
             var pureModel = ConvertToPureModel(model);
             var updateModel = await _repository.Update(pureModel);
-            return _mapper.Map<Room, RoomDTO>(updateModel);
+            return await ConvertToDto(updateModel);
         }
 
         protected async Task<RoomDTO> ConvertToDto(Room model)

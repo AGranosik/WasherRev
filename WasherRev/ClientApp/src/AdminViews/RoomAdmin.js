@@ -6,6 +6,7 @@ import { room_extract } from '../components/common/ModelExtractionFromForm';
 import { buildingOption } from '../components/common/EditDropDowns';
 import CustomDropDownListModalBody from '../components/common/CustomDropDownListModalBody';
 import { streetNumberValidator } from '../components/common/Validators';
+import apiProvider from '../api/apiProvider';
 
 class RoomAdmin extends React.Component{
 
@@ -13,7 +14,13 @@ class RoomAdmin extends React.Component{
         this.props.room_getall(
             this.props.user.token
         );
+        this.getBuildings();
     }
+
+    state = {
+        buildings: []
+    }
+
     buildingFullInfo = (building) => {
         return `Nr ${building.id} : (${building.name} ${building.street} ${building.streetNo} ${building.postCode})`;
       }
@@ -60,6 +67,29 @@ class RoomAdmin extends React.Component{
             dropdownOption={buildingOption}
             placeholder="Wybierz budenek przypisany do użytkownika" />
         );
+    }
+
+    getBuildings = async () => {
+        var response = await apiProvider(this.props.user.token).get('/api/Building');
+        var buildings = response.data;
+        this.setState({
+          buildings: buildings
+        });
+      }
+
+    getBuildingsValues = () => {
+        return this.state.buildings.map(
+          (building) => {
+            return this.buildingFullInfo(building);
+          }
+        );
+      }
+
+      onAfterEditRow = (row) => {
+        this.props.room_update(
+          this.props.user.token,
+          room_extract(row, true)
+        );
       }
 
     render(){
@@ -86,12 +116,19 @@ class RoomAdmin extends React.Component{
             deleteRow
             insertRow
             search
+            cellEdit = {
+                {
+                   mode: 'dbclick',
+                   blurToSave: true,
+                   afterSaveCell: this.onAfterEditRow
+                }
+              }
             options={options}>
             <TableHeaderColumn isKey autoValue hiddenOnInsert hidden dataField='id'></TableHeaderColumn>
             <TableHeaderColumn dataField='name' >Nazwa pokoju</TableHeaderColumn>
             <TableHeaderColumn dataField='floor' editable={ { validator: streetNumberValidator } } >Piętro</TableHeaderColumn>
             <TableHeaderColumn dataField='capacity' editable={ { validator: streetNumberValidator } } >Pojemność</TableHeaderColumn>
-            <TableHeaderColumn dataField='buildingName' customInsertEditor={ { getElement: this.buildingField } }>Budynek</TableHeaderColumn>
+            <TableHeaderColumn dataField='buildingName' editable={ { type: 'select', options: { values: this.getBuildingsValues() } } } customInsertEditor={ { getElement: this.buildingField } }>Budynek</TableHeaderColumn>
         </BootstrapTable>
         );
     }
