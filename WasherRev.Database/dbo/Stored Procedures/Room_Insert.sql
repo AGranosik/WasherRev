@@ -8,7 +8,7 @@
 )
 AS
 BEGIN
-	INSERT INTO [DBO].[Building] VALUES(
+	INSERT INTO [DBO].[Room] VALUES(
 		@Name,
 		@Floor,
 		@Capacity,
