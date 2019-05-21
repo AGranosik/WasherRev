@@ -3,14 +3,39 @@ import { connect } from "react-redux";
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { washer_delete, washer_getall, washer_insert, washer_update } from '../actions/WasherActions';
 import { washer_extract } from '../components/common/ModelExtractionFromForm';
+import apiProvider from '../api/apiProvider';
+import CustomDropDownListModalBody from '../components/common/CustomDropDownListModalBody'
+import { roomOption, producerOption } from '../components/common/EditDropDowns';
+
 
 class WasherAdmin extends React.Component{
-
 
     componentDidMount(){
         this.props.washer_getall(
             this.props.user.token
         );
+        this.getRooms();
+    }
+
+    state = {
+        rooms: [],
+        producer: []
+    }
+
+    getRooms = async () => {
+        var response = await apiProvider(this.props.user.token).get('/api/Room');
+        var rooms = response.data;
+        this.setState({
+          rooms: rooms
+        });
+    }
+
+    getProducers= async () => {
+      var response = await apiProvider(this.props.user.token).get('/api/Producer');
+      var producers = response.data;
+      this.setState({
+        producers: producers
+      });
     }
 
     getData(){
@@ -18,16 +43,40 @@ class WasherAdmin extends React.Component{
             (washer) => {
                 return{
                     ...washer,
-                    roomName: washer.room.name,
-                    producerName: washer.producer.name,
-                    sinceWhen: washer.sinceWhen.replace('T', ' '),
-                    workedTo: washer.workedTo == null ? '' : washer.workedTo.replace('T', ' ')
+                    roomName: `Nr: ${washer.id} ${washer.room.name}`,
+                    producerName: `Nr: ${washer.producer.id} ${washer.producer.name}`,
+                    sinceWhen: washer.sinceWhen.split('T')[0],
+                    workedTo: washer.workedTo == null ? '' : washer.workedTo.split('T')[0]
                 }
 
             }
         )
     }
+
+    roomField = (column, attr, editorClass, ignoreEditable) => {
+        return (
+          <CustomDropDownListModalBody
+            url='/api/Room'
+            token={ this.props.user.token }
+            ref={ attr.ref }
+            dropdownOption={roomOption}
+            placeholder="Wybierz pokój do którego ma być przypisana pralka" />
+        );
+      }
+
+      producerField = (column, attr, editorClass, ignoreEditable) => {
+        return (
+          <CustomDropDownListModalBody
+            url='/api/Producer'
+            token={ this.props.user.token }
+            ref={ attr.ref }
+            dropdownOption={producerOption}
+            placeholder="Wybierz producenta" />
+        );
+      }
+
     onAfterInsertRow = (row) => {
+      console.log(washer_extract(row));
         this.props.washer_insert(
           this.props.user.token,
           washer_extract(row)
@@ -87,12 +136,12 @@ class WasherAdmin extends React.Component{
                 }
               }
             options={options}>
-            <TableHeaderColumn isKey hidden hiddenOnInsert dataField='id'></TableHeaderColumn>
+            <TableHeaderColumn isKey autoValue hidden hiddenOnInsert dataField='id'></TableHeaderColumn>
             <TableHeaderColumn dataField='name' >Nazwa</TableHeaderColumn>
-            <TableHeaderColumn dataField='roomName' >Nazwa pokoju</TableHeaderColumn>
-            <TableHeaderColumn dataField='producerName'>Producent</TableHeaderColumn>
-            <TableHeaderColumn dataField='sinceWhen'>Od kiedy</TableHeaderColumn>
-            <TableHeaderColumn dataField='workedTo'>Pracuje do</TableHeaderColumn>
+            <TableHeaderColumn dataField='roomName' customInsertEditor={ { getElement: this.roomField }}>Nazwa pokoju</TableHeaderColumn>
+            <TableHeaderColumn dataField='producerName' customInsertEditor={ { getElement: this.producerField }}>Producent</TableHeaderColumn>
+            <TableHeaderColumn hiddenOnInsert dataField='sinceWhen'>Od kiedy</TableHeaderColumn>
+            <TableHeaderColumn hiddenOnInsert dataField='workedTo'>Pracuje do</TableHeaderColumn>
 
 
         </BootstrapTable>

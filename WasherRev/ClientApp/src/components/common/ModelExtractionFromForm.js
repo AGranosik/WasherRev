@@ -41,12 +41,13 @@ export const producer_extract = (form, withId = false) => {
 }
 
 export const washer_extract = (form, withId = false) => {
+  console.log(form);
   var washer = {
     Name: form.name,
-    RoomId: form.roomId,
-    ProducerId: form.producerId,
-    SinceWhen: form.SinceWen,
-    IsActive: form.IsActive,
+    RoomId: form.roomName.split(" ")[1],
+    ProducerId: form.producerName.split(" ")[1],
+    SinceWhen: form.sinceWhen == "" ? null : `${form.sinceWhen}T0:00:00`,
+    IsActive: 1,
     WorkedTo: form.WorkedTo
   }
 

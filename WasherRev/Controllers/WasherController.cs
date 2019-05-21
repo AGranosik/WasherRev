@@ -36,6 +36,7 @@ namespace WasherRev.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] WasherDTO washer)
         {
+            washer.SinceWhen = washer.SinceWhen ?? DateTime.Today;
             return await RunInsertActionAsync(() => _service.Insert(washer));
         }
 

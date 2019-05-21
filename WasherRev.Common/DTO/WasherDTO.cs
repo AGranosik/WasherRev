@@ -12,7 +12,7 @@ namespace WasherRev.Common.DTO
         public RoomDTO Room { get; set; }
         public int ProducerId { get; set; }
         public ProducerDTO Producer { get; set; }
-        public DateTime SinceWhen { get; set; }
+        public DateTime? SinceWhen { get; set; }
         public bool IsActive { get; set; }
         public DateTime? WorkedTo { get; set; }
     }

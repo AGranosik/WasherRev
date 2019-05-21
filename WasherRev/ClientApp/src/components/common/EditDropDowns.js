@@ -11,3 +11,17 @@ export const roleOption = (role) => {
       label: role.name
     }
   }
+
+  export const roomOption = (room) => {
+    return {
+      value: room.id,
+      label: `Nr ${room.id} :  ${room.name}`
+    }
+  }
+
+  export const producerOption = (producer) => {
+    return {
+      value: producer.id,
+      label: `Nr ${producer.id} :  ${producer.name}`
+    }
+  }
