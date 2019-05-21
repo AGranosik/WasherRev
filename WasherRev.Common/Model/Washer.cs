@@ -10,7 +10,7 @@ namespace WasherRev.Common.Model
         public string Name { get; set; }
         public int RoomId { get; set; }
         public int ProducerId { get; set; }
-        public DateTime SinceWhne { get; set; }
+        public DateTime SinceWhen { get; set; }
         public bool IsActive { get; set; }
         public DateTime? WorkedTo { get; set; }
     }

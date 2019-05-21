@@ -6,6 +6,7 @@ import { usersReducer } from '../reducers/usersReducer';
 import { buildingReducer } from '../reducers/buildingReducer';
 import { producerReducer } from '../reducers/producerReducer';
 import { reservationReducer } from '../reducers/reservationReducer';
+import { washerReducer } from '../reducers/washerReducer';
 
 
 
@@ -29,7 +30,8 @@ export default function configureStore(history, initialState) {
     users: usersReducer,
     buildings: buildingReducer,
     producers: producerReducer,
-    reservations: reservationReducer
+    reservations: reservationReducer,
+    washers: washerReducer
   });
 
   return createStore(

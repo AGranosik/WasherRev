@@ -39,3 +39,19 @@ export const producer_extract = (form, withId = false) => {
 
   return producer;
 }
+
+export const washer_extract = (form, withId = false) => {
+  var washer = {
+    Name: form.name,
+    RoomId: form.roomId,
+    ProducerId: form.producerId,
+    SinceWhen: form.SinceWen,
+    IsActive: form.IsActive,
+    WorkedTo: form.WorkedTo
+  }
+
+  if(withId)
+    return{ 'Id': form.id, ...washer}
+
+  return washer;
+}

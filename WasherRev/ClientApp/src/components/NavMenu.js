@@ -12,12 +12,12 @@ class NavMenu extends React.Component{
       if(this.props.isAdmin){
           return (
             <Nav>
-              <LinkContainer eventKey={1} to={'/users'} exact>
+              <LinkContainer to={'/users'} exact>
                 <NavItem>
                   Uzytkownicy
                 </NavItem>
               </LinkContainer>
-              <LinkContainer eventKey={2} to={'/building'} exact>
+              <LinkContainer to={'/building'} exact>
                 <NavItem>
                   Zarządzanie budynkami
                 </NavItem>
@@ -30,6 +30,11 @@ class NavMenu extends React.Component{
               <LinkContainer to={'/reservation'} exact>
                 <NavItem>
                   Zarządzanie rezerwacjami użytkowników
+                </NavItem>
+              </LinkContainer>
+              <LinkContainer to={'/washer'} exact>
+                <NavItem>
+                  Zarządzanie pralkami
                 </NavItem>
               </LinkContainer>
             </Nav>
