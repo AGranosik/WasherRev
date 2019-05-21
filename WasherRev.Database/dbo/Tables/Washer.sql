@@ -8,8 +8,7 @@
     [WorkedTo] DATETIME NULL, 
     CONSTRAINT [PK_WasherId] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_ProducerId_Washer] FOREIGN KEY ([ProducerId]) REFERENCES [dbo].[Producer] ([Id]),
-    CONSTRAINT [FK_Room_Washer] FOREIGN KEY ([RoomId]) REFERENCES [dbo].[Room] ([Id]),
-    CONSTRAINT [Name_uniqueness] UNIQUE NONCLUSTERED ([Name] ASC)
+    CONSTRAINT [FK_Room_Washer] FOREIGN KEY ([RoomId]) REFERENCES [dbo].[Room] ([Id])
 );
 
 

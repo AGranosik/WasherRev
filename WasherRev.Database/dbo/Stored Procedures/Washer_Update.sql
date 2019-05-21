@@ -18,4 +18,5 @@ BEGIN
 	[SinceWhen] = [SinceWhen],
 	[WorkedTo] = ISNULL(@WorkedTo, WorkedTo),
 	[IsActive] = [IsActive]
+	WHERE [Id] = @Id
 END

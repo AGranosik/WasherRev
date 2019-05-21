@@ -41,16 +41,15 @@ export const producer_extract = (form, withId = false) => {
 }
 
 export const washer_extract = (form, withId = false) => {
-  console.log(form);
   var washer = {
     Name: form.name,
     RoomId: form.roomName.split(" ")[1],
     ProducerId: form.producerName.split(" ")[1],
-    SinceWhen: form.sinceWhen == "" ? null : `${form.sinceWhen}T0:00:00`,
+    SinceWhen: form.sinceWhen == "" ? undefined : `${form.sinceWhen}T00:00:00`,
     IsActive: 1,
-    WorkedTo: form.WorkedTo
+    WorkedTo: form.workedTo == "" ? undefined : form.workedTo
   }
-
+  console.log(washer);
   if(withId)
     return{ 'Id': form.id, ...washer}
 

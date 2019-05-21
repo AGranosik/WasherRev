@@ -15,11 +15,12 @@ class WasherAdmin extends React.Component{
             this.props.user.token
         );
         this.getRooms();
+        this.getProducers();
     }
 
     state = {
         rooms: [],
-        producer: []
+        producers: []
     }
 
     getRooms = async () => {
@@ -43,8 +44,8 @@ class WasherAdmin extends React.Component{
             (washer) => {
                 return{
                     ...washer,
-                    roomName: `Nr: ${washer.id} ${washer.room.name}`,
-                    producerName: `Nr: ${washer.producer.id} ${washer.producer.name}`,
+                    roomName: `Nr ${washer.room.id} : ${washer.room.name}`,
+                    producerName: `Nr ${washer.producer.id} : ${washer.producer.name}`,
                     sinceWhen: washer.sinceWhen.split('T')[0],
                     workedTo: washer.workedTo == null ? '' : washer.workedTo.split('T')[0]
                 }
@@ -76,10 +77,25 @@ class WasherAdmin extends React.Component{
       }
 
     onAfterInsertRow = (row) => {
-      console.log(washer_extract(row));
         this.props.washer_insert(
           this.props.user.token,
           washer_extract(row)
+        );
+      }
+
+      getProducerValues = () => {
+        return this.state.producers.map(
+          (producer) => {
+            return `Nr ${producer.id} :  ${producer.name}`;
+          }
+        );
+      }
+
+      getRoomValues = () => {
+        return this.state.rooms.map(
+          (room) => {
+            return `Nr ${room.id} : ${room.name}`;
+          }
         );
       }
 
@@ -132,16 +148,16 @@ class WasherAdmin extends React.Component{
                 {
                    mode: 'dbclick',
                    blurToSave: true,
-                   //afterSaveCell: this.onAfterEditRow
+                   afterSaveCell: this.onAfterEditRow
                 }
               }
             options={options}>
             <TableHeaderColumn isKey autoValue hidden hiddenOnInsert dataField='id'></TableHeaderColumn>
             <TableHeaderColumn dataField='name' >Nazwa</TableHeaderColumn>
-            <TableHeaderColumn dataField='roomName' customInsertEditor={ { getElement: this.roomField }}>Nazwa pokoju</TableHeaderColumn>
-            <TableHeaderColumn dataField='producerName' customInsertEditor={ { getElement: this.producerField }}>Producent</TableHeaderColumn>
-            <TableHeaderColumn hiddenOnInsert dataField='sinceWhen'>Od kiedy</TableHeaderColumn>
-            <TableHeaderColumn hiddenOnInsert dataField='workedTo'>Pracuje do</TableHeaderColumn>
+            <TableHeaderColumn dataField='roomName' editable={ { type: 'select', options: { values: this.getRoomValues() } } } customInsertEditor={ { getElement: this.roomField }}>Nazwa pokoju</TableHeaderColumn>
+            <TableHeaderColumn dataField='producerName' editable={ { type: 'select', options: { values: this.getProducerValues() } } } customInsertEditor={ { getElement: this.producerField }}>Producent</TableHeaderColumn>
+            <TableHeaderColumn hiddenOnInsert editable={false} dataField='sinceWhen'>Od kiedy</TableHeaderColumn>
+            <TableHeaderColumn hidden hiddenOnInsert dataField='workedTo'>Pracuje do</TableHeaderColumn>
 
 
         </BootstrapTable>
