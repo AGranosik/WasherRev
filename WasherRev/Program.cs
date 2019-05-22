@@ -19,6 +19,9 @@ namespace WasherRev
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                        .UseUrls("http://*:54643")
+            .UseContentRoot(Directory.GetCurrentDirectory())
+            .UseIISIntegration()
                 .UseStartup<Startup>();
     }
 }
