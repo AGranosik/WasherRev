@@ -27,7 +27,11 @@ namespace WasherRev.Backend.Services
             var models = await _repository.GetAll();
             var dtos = new List<RoomDTO>();
 
-            models.ForEach(async x => dtos.Add(await ConvertToDto(x)));
+            foreach(var model in models)
+            {
+                var dto = await ConvertToDto(model);
+                dtos.Add(dto);
+            }
 
             return dtos;
         }
