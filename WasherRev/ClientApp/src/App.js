@@ -9,6 +9,7 @@ import Building from './components/Building';
 import Reservation from './components/Reservation';
 import Producer from './components/Producer';
 import Washer from './components/Washer';
+import Room from './components/Room'
 
 class App extends React.Component{
 
@@ -24,6 +25,7 @@ class App extends React.Component{
                         <Route exact path='/producer' component={Producer} />
                         <Route exact path='/reservation' component={Reservation}/>
                         <Route exact path='/washer' component={Washer} />
+                        <Route exact path='/room' component={Room} />
                     </Layout>
                 );
             }
