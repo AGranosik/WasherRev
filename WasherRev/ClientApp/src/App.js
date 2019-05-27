@@ -9,7 +9,9 @@ import Building from './components/Building';
 import Reservation from './components/Reservation';
 import Producer from './components/Producer';
 import Washer from './components/Washer';
-import Room from './components/Room'
+import Room from './components/Room';
+import HomeUser from './UserViews/Home';
+import MyReservation from './UserViews/MyReservation';
 
 class App extends React.Component{
 
@@ -31,7 +33,11 @@ class App extends React.Component{
             }
 
             return (
-                <div>no admin</div>
+                <Layout>
+                    <Route exact path='/' component={HomeUser} />
+                    <Route exact path='/reservation' component={HomeUser} />
+                    <Route exact path='/myReservation' component={MyReservation} />
+                </Layout>
             );
 
         }

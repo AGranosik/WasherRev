@@ -46,7 +46,21 @@ class NavMenu extends React.Component{
           );
       }
       else{
-          return <div>no admin panel</div>
+        return(
+          <Nav>
+          <LinkContainer to={'/reservation'} exact>
+            <NavItem>
+              Rezerwacje
+            </NavItem>
+          </LinkContainer>
+          <LinkContainer to={'/myReservation'} exact>
+            <NavItem>
+              Moje Rezerwacje
+            </NavItem>
+          </LinkContainer>
+        </Nav>
+        );
+
       }
   }
 
