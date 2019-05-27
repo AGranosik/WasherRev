@@ -12,6 +12,8 @@ import Washer from './components/Washer';
 import Room from './components/Room';
 import HomeUser from './UserViews/Home';
 import MyReservation from './UserViews/MyReservation';
+import UserReservation from './UserViews/Reservation';
+
 
 class App extends React.Component{
 
@@ -35,7 +37,7 @@ class App extends React.Component{
             return (
                 <Layout>
                     <Route exact path='/' component={HomeUser} />
-                    <Route exact path='/reservation' component={HomeUser} />
+                    <Route exact path='/reservation' component={UserReservation} />
                     <Route exact path='/myReservation' component={MyReservation} />
                 </Layout>
             );

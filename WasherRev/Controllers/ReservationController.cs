@@ -56,10 +56,10 @@ namespace WasherRev.Api.Controllers
         }
 
         [AuthorizeRoles(ERole.Admin, ERole.User)]
-        [HttpGet("[action]/{buildingId}")]
-        public async Task<IActionResult> GetReservationsForUser(int buildingId, [FromBody]DateTime date)
+        [HttpGet("[action]/{buildingId}/{year}/{month}")]
+        public async Task<IActionResult> GetReservationsForUser(int buildingId, int year, int month)
         {
-            return await RunGetActionListAsync(() => _service.GetReservationsForUser(date, buildingId));
+            return await RunGetActionListAsync(() => _service.GetReservationsForUser(new DateTime(year, month, DateTime.Now.Day), buildingId));
         }
 
         [AuthorizeRoles(ERole.Admin, ERole.User)]

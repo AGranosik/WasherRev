@@ -27,5 +27,5 @@ BEGIN
 	AND
 	MONTH(@Date) = MONTH(r.[StartTime])
 	AND
-	DAY(@Date) = DAY(r.[StartTime])
+	DAY(@Date) <= DAY(r.[StartTime])
 END
