@@ -37,11 +37,30 @@ class NavMenu extends React.Component{
                   Zarządzanie pralkami
                 </NavItem>
               </LinkContainer>
+              <LinkContainer to={'/room'} exact>
+                <NavItem>
+                  Zarządzanie pokojami
+                </NavItem>
+              </LinkContainer>
             </Nav>
           );
       }
       else{
-          return <div>no admin panel</div>
+        return(
+          <Nav>
+          <LinkContainer to={'/reservation'} exact>
+            <NavItem>
+              Rezerwacje
+            </NavItem>
+          </LinkContainer>
+          <LinkContainer to={'/myReservation'} exact>
+            <NavItem>
+              Moje Rezerwacje
+            </NavItem>
+          </LinkContainer>
+        </Nav>
+        );
+
       }
   }
 

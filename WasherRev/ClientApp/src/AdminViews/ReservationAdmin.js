@@ -14,7 +14,6 @@ class ReservationAdmin extends React.Component {
 
 
     onAfterDeleteRow = (row) => {
-        console.log(row);
         for(let i = 0; i < row.length; i++){
           var reservation = this.props.reservations.find(
             (reservation) => {
@@ -53,20 +52,24 @@ class ReservationAdmin extends React.Component {
     }
 
     buttonFromat(cell, row){
-      console.log(this.props);
-      return (
-        <Button 
-          variant="primary"
-          lg="sm"
-          onClick={() =>{
-            this.props.reservation_reserve(
-              this.props.user.token,
-              row.id,
-              this.props.user.userId
-            )
-          }
-          }>Zarezerwuj</Button>
-      );
+      if(row.usersId === 0){
+        return (
+          <Button 
+            variant="primary"
+            lg="sm"
+            onClick={() =>{
+              this.props.reservation_reserve(
+                this.props.user.token,
+                row.id,
+                this.props.user.userId
+              )
+            }
+            }>Zarezerwuj</Button>
+        );
+      }
+      else{
+        return '';
+      }
     }
 
     render(){
@@ -114,7 +117,6 @@ class ReservationAdmin extends React.Component {
 
 
 const mapStateToProps = (state) => {
-  console.log(state);
     return{
         user: state.user,
         reservations: state.reservations

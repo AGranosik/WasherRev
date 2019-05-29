@@ -18,24 +18,37 @@ namespace WasherRev.Backend.Repository
 
         public async Task<List<Reservation>> GetReservationsForUser(DateTime date, int buildingId)
         {
-            using(var conn = new SqlConnection(connectionString))
-            {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Date", date);
-                parameters.Add("@BuildingId", buildingId);
+           // using(var conn = new SqlConnection(connectionString))
+           // {
+                try
+                {
+                var conn = new SqlConnection(connectionString);
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("@Date", date);
+                    parameters.Add("@BuildingId", buildingId);
 
-                var result = await conn.QueryAsync<Reservation>("Reservation_GetForUser",
-                    param: parameters,
-                commandType: System.Data.CommandType.StoredProcedure);
+                    var result = await conn.QueryAsync<Reservation>("Reservation_GetForUser",
+                        param: parameters,
+                    commandType: System.Data.CommandType.StoredProcedure);
 
-                return result.AsList();
-            }
+                    return result.AsList();
+                }
+                catch (Exception ex)
+                {
+                    
+                }
+                return null;
+  
+           // }
         }
 
         public async Task<List<Reservation>> GetUsersReervations(DateTime? date, int usersId)
         {
-            using (var conn = new SqlConnection(connectionString))
+            //using (var conn = new SqlConnection(connectionString))
+            //{
+            try
             {
+                var conn = new SqlConnection(connectionString);
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@Date", date);
                 parameters.Add("@UsersId", usersId);
@@ -46,6 +59,12 @@ namespace WasherRev.Backend.Repository
 
                 return result.AsList();
             }
+            catch (Exception ex)
+            {
+
+            }
+            return null;
+            //}
         }
 
         public async Task<Reservation> MakeReservation(int reservationId, int userId)

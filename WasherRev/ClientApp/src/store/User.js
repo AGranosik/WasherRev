@@ -4,19 +4,21 @@ const initialState = {
         userId: null,
         token: '',
         roleName: '',
-        username: ''
+        username: '',
+        buildingId: ''
 };
 
 export const reducer = (state, action) => {
     state = state || initialState;
     switch(action.type){
         case SIGN_IN :{
-            const { roleName, token, id, username } = action.payload;
+            const { roleName, token, id, username, buildingId } = action.payload;
             return { ...state,
                 roleName: roleName,
                 userId: id,
                 token: token,
-                username: username
+                username: username,
+                buildingId: buildingId
             }
 
         }

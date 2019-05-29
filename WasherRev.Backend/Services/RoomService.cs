@@ -27,7 +27,11 @@ namespace WasherRev.Backend.Services
             var models = await _repository.GetAll();
             var dtos = new List<RoomDTO>();
 
-            models.ForEach(async x => dtos.Add(await ConvertToDto(x)));
+            foreach(var model in models)
+            {
+                var dto = await ConvertToDto(model);
+                dtos.Add(dto);
+            }
 
             return dtos;
         }
@@ -41,28 +45,27 @@ namespace WasherRev.Backend.Services
         {
             var pureModel = ConvertToPureModel(model);
             var insertedModel = await _repository.Insert(pureModel);
-            return _mapper.Map<Room, RoomDTO>(insertedModel);
+            return await ConvertToDto(insertedModel);
         }
 
         public async Task<RoomDTO> Update(RoomDTO model)
         {
             var pureModel = ConvertToPureModel(model);
             var updateModel = await _repository.Update(pureModel);
-            return _mapper.Map<Room, RoomDTO>(updateModel);
+            return await ConvertToDto(updateModel);
         }
 
         protected async Task<RoomDTO> ConvertToDto(Room model)
         {
             var dto = _mapper.Map<Room, RoomDTO>(model);
-
-            dto.Building = _mapper.Map<Building, BuildingDTO>(await _buildingRepository.GetById(model.BuildingId));
+            var buildingDto = await _buildingRepository.GetById(model.BuildingId);
+            dto.Building = _mapper.Map<Building, BuildingDTO>(buildingDto);
             return dto;
         }
 
         protected Room ConvertToPureModel(RoomDTO dto)
         {
             var pureModel = _mapper.Map<RoomDTO, Room>(dto);
-            pureModel.BuildingId = dto.Building.Id;
 
             return pureModel;
         }

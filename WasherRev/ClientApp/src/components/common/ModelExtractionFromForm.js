@@ -49,9 +49,23 @@ export const washer_extract = (form, withId = false) => {
     IsActive: 1,
     WorkedTo: form.workedTo == "" ? undefined : form.workedTo
   }
-  console.log(washer);
   if(withId)
     return{ 'Id': form.id, ...washer}
 
   return washer;
+}
+
+export const room_extract = (form, withId = false) => {
+  var room = {
+    Name: form.name,
+    Floor: form.floor,
+    Capacity: form.capacity,
+    BuildingId: form.buildingName.split(" ")[1],
+    IsActive: 1
+  }
+
+  if(withId)
+    return { 'Id': form.id, ...room}
+  
+    return room;
 }

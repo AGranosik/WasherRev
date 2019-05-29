@@ -32,8 +32,11 @@ namespace WasherRev.Backend.Repository
 
         public async Task<TModel> GetById(int id)
         {
-            using (var conn = new SqlConnection(connectionString))
+            //using (var conn = new SqlConnection(connectionString))
+            //{
+            try
             {
+                var conn = new SqlConnection(connectionString);
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@Id", id);
 
@@ -45,19 +48,35 @@ namespace WasherRev.Backend.Repository
 
                 return result;
             }
+            catch(Exception ex)
+            {
+
+            }
+            return default(TModel);
+//} 
         }
 
         public async Task<TModel> Insert(TModel model)
         {
-            using (var conn = new SqlConnection(connectionString))
-            {
-                DynamicParameters parameters = GetDynamicParameters(model);
-                var result = await conn.QuerySingleAsync<int>($"{typeof(TModel).Name}_Insert",
-                    param: parameters,
-                    commandType: System.Data.CommandType.StoredProcedure);
+            //using (var conn = new SqlConnection(connectionString))
+           // {
+                try
+                {
+                var conn = new SqlConnection(connectionString);
+                    DynamicParameters parameters = GetDynamicParameters(model);
+                    var result = await conn.QuerySingleAsync<int>($"{typeof(TModel).Name}_Insert",
+                        param: parameters,
+                        commandType: System.Data.CommandType.StoredProcedure);
 
-                return await GetById(result);
-            }
+                    return await GetById(result);
+                }
+                catch(Exception ex)
+                {
+
+                }
+            return default(TModel);
+
+          //  }
     }
 
         public async Task Remove(int id)
