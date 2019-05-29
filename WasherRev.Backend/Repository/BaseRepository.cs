@@ -74,24 +74,15 @@ namespace WasherRev.Backend.Repository
 
         public async Task<TModel> Update(TModel model)
         {
-            //using (var conn = new SqlConnection(connectionString))
-            //{
-                try
-                {
-                    var conn = new SqlConnection(connectionString);
-                    DynamicParameters parameters = GetDynamicParameters(model, true);
-                    var result = await conn.QueryAsync($"{typeof(TModel).Name}_Update",
-                        param: parameters,
-                        commandType: System.Data.CommandType.StoredProcedure);
-
-                    return await GetById(parameters.Get<int>("Id"));
-                }
-                catch(Exception ex)
+            using (var conn = new SqlConnection(connectionString))
             {
+                DynamicParameters parameters = GetDynamicParameters(model, true);
+                var result = await conn.QueryAsync($"{typeof(TModel).Name}_Update",
+                    param: parameters,
+                    commandType: System.Data.CommandType.StoredProcedure);
 
+                return await GetById(parameters.Get<int>("Id"));
             }
-            return default(TModel);
-            //}
         }
 
         protected DynamicParameters GetDynamicParameters(TModel model, bool withId = false)

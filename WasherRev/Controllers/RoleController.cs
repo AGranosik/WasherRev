@@ -34,16 +34,6 @@ namespace WasherRev.Api.Controllers
             }
 
             return Ok(roles);
-
-            //Dictionary<int, string> roles = new Dictionary<int, string>();
-            //var roleNames = Enum.GetNames(typeof(ERole)).ToList();
-            //int i = 1;
-            //foreach (var role in roleNames)
-            //{
-            //    roles.Add(i++, role);
-            //}
-
-            //return Ok(roles);
         }
 
     }
