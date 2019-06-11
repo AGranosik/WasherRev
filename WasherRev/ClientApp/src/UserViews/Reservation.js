@@ -30,19 +30,29 @@ class Reservation extends React.Component{
         var now = new Date();
         if(date.getFullYear() === now.getFullYear()
             && date.getMonth() >= now.getMonth()
-            && date.getDay() >= now.getDay()){
-                if(date.getDay() === now.getDay()){
-                    if(date.getHours() > now.getHours()){
+            && date.getDate() >= now.getDate()){
+                
+                if(date.getDate() === now.getDate()){
+                    if(date.getHours() >= now.getHours()){
+                        
                         return (
                             <Button 
                               variant="primary"
                               lg="sm"
                               onClick={() =>{
                                 this.props.reservation_reserve(
-                                  this.props.user.token,
-                                  row.id,
-                                  this.props.user.userId
-                                )
+                                    this.props.user.token,
+                                    row.id,
+                                    this.props.user.userId
+                                );
+
+                                var revArray = this.state.reservations.filter((rev) => {
+                                    if(rev.id !== row.id) return rev;
+                                });
+                                this.setState({
+                                    reservations: revArray
+                                });
+                                alert('Rezerwacja przebiegła pomyślnie');
                               }
                               }>Zarezerwuj</Button>
                           );
@@ -51,19 +61,29 @@ class Reservation extends React.Component{
                         return 'Nie można już dokonać rezerwacji';
                     }
                 }
-                return (
-                    <Button 
-                      variant="primary"
-                      lg="sm"
-                      onClick={() =>{
-                        this.props.reservation_reserve(
-                          this.props.user.token,
-                          row.id,
-                          this.props.user.userId
-                        )
-                      }
-                      }>Zarezerwuj</Button>
-                  );
+                else{
+                    return (
+                        <Button 
+                          variant="primary"
+                          lg="sm"
+                          onClick={() =>{
+                            this.props.reservation_reserve(
+                              this.props.user.token,
+                              row.id,
+                              this.props.user.userId
+                            );
+
+                            var revArray = this.state.reservations.filter((rev) => {
+                                if(rev.id !== row.id) return rev;
+                            });
+                            this.setState({
+                                reservations: revArray
+                            });
+                            alert('Rezerwacja przebiegła pomyślnie');
+                          }
+                          }>Zarezerwuj</Button>
+                      );
+                }
             }
             else{
                 return '';

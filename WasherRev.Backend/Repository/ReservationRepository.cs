@@ -18,12 +18,9 @@ namespace WasherRev.Backend.Repository
 
         public async Task<List<Reservation>> GetReservationsForUser(DateTime date, int buildingId)
         {
-           // using(var conn = new SqlConnection(connectionString))
-           // {
-                try
-                {
-                var conn = new SqlConnection(connectionString);
-                    DynamicParameters parameters = new DynamicParameters();
+            using (var conn = new SqlConnection(connectionString))
+            {
+                DynamicParameters parameters = new DynamicParameters();
                     parameters.Add("@Date", date);
                     parameters.Add("@BuildingId", buildingId);
 
@@ -33,38 +30,23 @@ namespace WasherRev.Backend.Repository
 
                     return result.AsList();
                 }
-                catch (Exception ex)
-                {
-                    
-                }
-                return null;
-  
-           // }
         }
 
         public async Task<List<Reservation>> GetUsersReervations(DateTime? date, int usersId)
         {
-            //using (var conn = new SqlConnection(connectionString))
-            //{
-            try
+            using (var conn = new SqlConnection(connectionString))
             {
-                var conn = new SqlConnection(connectionString);
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Date", date);
-                parameters.Add("@UsersId", usersId);
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("@Date", date);
+                    parameters.Add("@UsersId", usersId);
 
-                var result = await conn.QueryAsync<Reservation>("Reservation_UsersReservations",
-                    param: parameters,
-                commandType: System.Data.CommandType.StoredProcedure);
+                    var result = await conn.QueryAsync<Reservation>("Reservation_UsersReservations",
+                        param: parameters,
+                    commandType: System.Data.CommandType.StoredProcedure);
 
-                return result.AsList();
-            }
-            catch (Exception ex)
-            {
+                    return result.AsList();
 
             }
-            return null;
-            //}
         }
 
         public async Task<Reservation> MakeReservation(int reservationId, int userId)
